@@ -1,5 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.container
+    div.row
+      div.col-md-12
+        h1= title
+        p Welcome to #{title}
+    div.row
+      div.col-md-3
+        ul.nav.nav-pills.nav-stacked
+          li.active
+            a(href='#led') LED
+          li
+            a(href='#queue') Queue
+          li
+            a(href='#sounds') Sounds
+          li
+            a(href='#app') Application
+      div.col-md-9
+        div.scrollable
+          div#led
+            h3 LED 
+          div#queue
+            h3 Queue 
+          div#sounds
+            h3 Sounds
+          div#app
+            h3 Application
