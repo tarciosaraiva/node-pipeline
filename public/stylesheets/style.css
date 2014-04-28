@@ -8,6 +8,5 @@ a {
 .scrollable {
     position: relative;
     height: 200px;
-    margin-top: 10px;
-    overflow: auto;
+    overflow: auto hidden;
 }

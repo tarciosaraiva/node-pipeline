@@ -1,16 +1,17 @@
 extends layout
+include mixins/mixins.jade
 
 block content
   div.container
     div.row
       div.col-md-12
         h1= title
-        p Welcome to #{title}
+        hr
     div.row
       div.col-md-3
         ul.nav.nav-pills.nav-stacked
           li.active
-            a(href='#led') LED
+            a(href='#led') LEDs and Pipeline
           li
             a(href='#queue') Queue
           li
@@ -18,12 +19,23 @@ block content
           li
             a(href='#app') Application
       div.col-md-9
-        div.scrollable
-          div#led
-            h3 LED 
-          div#queue
-            h3 Queue 
-          div#sounds
-            h3 Sounds
-          div#app
-            h3 Application
+        div.row
+          form#led(role='form').form-horizontal
+            fieldset 
+              legend LEDs and pipeline
+              +colorGroup
+              +fullTextGroup('LED length')
+              +fullTextGroup('Pipeline stages')
+              +fullTextGroup('LEDs per stage')
+        div.row
+          form#queue(role='form').form-horizontal
+            fieldset 
+              legend Queue
+        div.row
+          form#sounds(role='form').form-horizontal
+            fieldset 
+              legend Sounds
+        div.row
+          form#app(role='form').form-horizontal
+            fieldset 
+              legend Application

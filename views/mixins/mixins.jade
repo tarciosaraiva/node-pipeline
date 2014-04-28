@@ -1,0 +1,29 @@
+mixin fullTextGroup(label)
+  div.form-group
+    label.control-label.col-md-3(for='length')= label
+    div.col-md-9
+      input#length.form-control(type='text')
+
+mixin colorGroup
+  div.form-group
+    label.control-label.col-md-3(for='success') Status colours
+    div.col-md-2
+      div.input-group.colorpicker-s
+        input#success.form-control(type='text', placeholder='Success')
+        span.input-group-addon
+          i
+    div.col-md-2
+      div.input-group.colorpicker-f
+        input#fail.form-control(type='text', placeholder='Fail')
+        span.input-group-addon
+          i
+    div.col-md-2.col-md-offset-1
+      div.input-group.colorpicker-a
+        input#abort.form-control(type='text', placeholder='Abort')
+        span.input-group-addon
+          i
+    div.col-md-2
+      div.input-group.colorpicker-u
+        input#unstable.form-control(type='text', placeholder='Unstable')
+        span.input-group-addon
+          i
