@@ -31,7 +31,7 @@ router.post('/test', function (req, res) {
   res.send();
 });
 
-router.get('/animate', function (req, res) {
+router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
     speed = req.param('speed');
