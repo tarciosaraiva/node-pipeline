@@ -19,7 +19,7 @@ block content
           li
             a(href='#app') Application
       div.col-md-9
-        div.row
+        div.row(ng-controller='MainCtrl')
           form#led(role='form').form-horizontal
             fieldset 
               legend LED strip
@@ -31,6 +31,23 @@ block content
           form#queue(role='form').form-horizontal
             fieldset 
               legend Pipeline
+              div.form-group
+                label.control-label.col-md-2(for='pipeline-name') Pipeline name
+                div.col-md-8
+                  input#pipeline-name.form-control(type='text')
+                div.col-md-2
+                  button#add-stage.btn.btn-info.form-control Add stage
+              div.form-group
+                label.control-label.col-md-2(for='stage-name') Stage length
+                div.col-md-10
+                  table.table.table-bordered
+                    tr
+                      - for (var x = 0; x < 32; x++)
+                        td &nbsp;
+
+              div.form-group
+                div.col-md-3.col-md-offset-2
+                  button#add-pipeline.btn.btn-primary.form-control Add pipeline
         div.row
           form#sounds(role='form').form-horizontal
             fieldset 

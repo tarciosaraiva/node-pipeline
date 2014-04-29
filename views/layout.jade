@@ -1,5 +1,5 @@
 doctype html
-html
+html(lang='en')
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
@@ -9,6 +9,10 @@ html
     script(src='/javascripts/jquery-1.11.0.min.js')
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/bootstrap-colorpicker.min.js')
+    script(src='/javascripts/angular.min.js')
+    script(src='/javascripts/angular-resource.min.js')  
+    script(src='/javascripts/angular-route.min.js')
     script(src='/javascripts/app.js')
-  body
+    script(src='/javascripts/main.ctrl.js')
+  body(ng-app='pipeline')
     block content

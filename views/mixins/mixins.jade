@@ -1,12 +1,12 @@
 mixin fullTextGroup(label)
   div.form-group
-    label.control-label.col-md-3(for='length')= label
+    label.control-label.col-md-2(for='length')= label
     div.col-md-3
       input#length.form-control(type='text')
 
 mixin colorGroup
   div.form-group
-    label.control-label.col-md-3(for='success') Status colours
+    label.control-label.col-md-2(for='success') Status colours
     div.col-md-2
       div.input-group.colorpicker-s
         input#success.form-control(type='text', placeholder='Success')
@@ -30,13 +30,14 @@ mixin colorGroup
 
 mixin buildingColorGroup
   div.form-group
-    label.control-label.col-md-3(for='building') Building animation
-    div.col-md-2
+    label.control-label.col-md-2(for='building') Building status
+    div.col-md-3
       select#building.form-control
+        option(value='') -- Animation --
         option(value='standard') Standard
         option(value='rainbow') Rainbow
         option(value='flashing') Flashing
-    div.col-md-2
+    div.col-md-3
       div.input-group.colorpicker-anim
         input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF')
         span.input-group-addon
@@ -48,21 +49,21 @@ mixin buildingColorGroup
 
 mixin buttonGroup(label, buttonName, buttonLabel, message)
   div.form-group
-    label.control-label.col-md-3(for='length')= label
+    label.control-label.col-md-2(for='length')= label
     div.col-md-3
-      button.btn.btn-primary.form-control(id=buttonName, name=buttonName)= buttonLabel
-    div.col-md-6
-      span.help-block= message
+      button.btn.btn-primary.form-control(id=buttonName, name=buttonName,ng-click='executeTest()')= buttonLabel
+    div.col-md-7
+      small.help-block= message
 
 mixin checkboxGroup(id, label)
   div.form-group
-    div.col-md-offset-3.col-md-9
+    div.col-md-offset-2.col-md-9
       div.checkbox
         label= label
           input(type='checkbox', id=id, name=id)
 
 mixin fileUploadGroup(id, label)
   div.form-group
-    label.control-label.col-md-3(for=id)= label
+    label.control-label.col-md-2(for=id)= label
     div.col-md-9
       input(type='file', id=id, name=id, class='button')
