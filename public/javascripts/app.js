@@ -11,6 +11,9 @@ $(function () {
   }, {
     name: '.colorpicker-u',
     defaultColor: '#ffff00'
+  }, {
+    name: '.colorpicker-anim',
+    defaultColor: '#0000ff'
   }].forEach(function (el) {
     $(el.name).colorpicker({
       color: el.defaultColor

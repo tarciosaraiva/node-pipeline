@@ -11,9 +11,9 @@ block content
       div.col-md-3
         ul.nav.nav-pills.nav-stacked
           li.active
-            a(href='#led') LEDs and Pipeline
+            a(href='#led') LED strip
           li
-            a(href='#queue') Queue
+            a(href='#queue') Pipeline
           li
             a(href='#sounds') Sounds
           li
@@ -22,19 +22,24 @@ block content
         div.row
           form#led(role='form').form-horizontal
             fieldset 
-              legend LEDs and pipeline
-              +colorGroup
+              legend LED strip
               +fullTextGroup('LED length')
-              +fullTextGroup('Pipeline stages')
-              +fullTextGroup('LEDs per stage')
+              +buttonGroup('Test your LED', btnTestLed, 'Execute test', 'I will run a simple test to verify connectivity with the LED strip using the status colours below.')
+              +colorGroup
+              +buildingColorGroup
         div.row
           form#queue(role='form').form-horizontal
             fieldset 
-              legend Queue
+              legend Pipeline
         div.row
           form#sounds(role='form').form-horizontal
             fieldset 
               legend Sounds
+              +checkboxGroup('sounds', 'Enable sounds')
+              +fileUploadGroup('successSound', 'Success')
+              +fileUploadGroup('failSound', 'Fail')
+              +fileUploadGroup('abortSound', 'Abort')
+              +fileUploadGroup('unstableSound', 'Unstable')
         div.row
           form#app(role='form').form-horizontal
             fieldset 
