@@ -3,7 +3,7 @@ var ledstripe = require('ledstripe');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/led/test', function (req, res) {
+router.get('/test', function (req, res) {
   // everything possibly sane
   var numLEDs = 24,
     myStripeType = 'LPD8806',
@@ -31,6 +31,8 @@ router.get('/led/test', function (req, res) {
     myLedStripe.disconnect();
     process.exit()
   }, 4000);
+
+  res.send();
 });
 
 module.exports = router;
