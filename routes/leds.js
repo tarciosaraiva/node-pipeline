@@ -39,7 +39,7 @@ function hexToRgb(hex) {
 }
 
 function flash(buffer, speed, colour) {
-  var rgb = parseColour(colour);
+  var rgb = hexToRgb(colour);
   setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       ledstrip.fill(rgb.r, rgb.g, rgb.b);
@@ -49,7 +49,7 @@ function flash(buffer, speed, colour) {
 }
 
 function standard(buffer, speed, colour) {
-  var rgb = parseColour(colour);
+  var rgb = hexToRgb(colour);
   setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       ledstrip.fill(rgb.r, rgb.g, rgb.b);
