@@ -2,30 +2,82 @@ var express = require('express');
 var ledstrip = require('./../lib/ledstrip');
 var router = express.Router();
 
+function disconnectLed() {
+  ledstrip.fill(0x00, 0x00, 0x00);
+  ledstrip.disconnect();
+}
+
+function rainbow(buffer, speed) {
+  var animationTick = 0.005;
+  var angle = 0;
+  var ledDistance = 0.3;
+
+  setInterval(function () {
+    if (ledstrip.isBufferOpen()) {
+      angle = (angle < Math.PI * 2) ? angle : angle - Math.PI * 2;
+      for (var i = 0; i < buffer.length; i += 3) {
+        //red
+        buffer[i] = 128 + Math.sin(angle + (i / 3) * ledDistance) * 128;
+        //green
+        buffer[i + 1] = 128 + Math.sin(angle * -5 + (i / 3) * ledDistance) * 128;
+        //blue
+        buffer[i + 2] = 128 + Math.sin(angle * 7 + (i / 3) * ledDistance) * 128;
+      }
+      ledstrip.sendRgbBuf(buffer);
+      angle += animationTick;
+    }
+  }, speed);
+}
+
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+function flash(buffer, speed, colour) {
+  var rgb = parseColour(colour);
+  setInterval(function () {
+    if (ledstrip.isBufferOpen()) {
+      ledstrip.fill(rgb.r, rgb.g, rgb.b);
+      ledstrip.fill(0x00, 0x00, 0x00);
+    }
+  }, speed);
+}
+
+function standard(buffer, speed, colour) {
+  var rgb = parseColour(colour);
+  setInterval(function () {
+    if (ledstrip.isBufferOpen()) {
+      ledstrip.fill(rgb.r, rgb.g, rgb.b);
+      ledstrip.fill(0x00, 0x00, 0x00);
+    }
+  }, speed);
+}
+
 /* GET users listing. */
 router.post('/test', function (req, res) {
-  // everything possibly sane
-  var numLEDs = Number(req.param('length')),
-    mySpiDevice = '/dev/spidev0.0';
+  var numLEDs = Number(req.param('length'));
 
-  // connecting to SPI
-  ledstrip.connect(numLEDs, mySpiDevice);
+  ledstrip.connect(numLEDs);
 
   // do some fancy stuff
   ledstrip.fill(0xFF, 0x00, 0x00);
   setTimeout(function () {
     ledstrip.fill(0x00, 0xFF, 0x00);
-  }, 2000);
+  }, 1000);
   setTimeout(function () {
     ledstrip.fill(0x00, 0x00, 0xFF);
-  }, 4000);
+  }, 2000);
   setTimeout(function () {
     ledstrip.fill(0xFF, 0xFF, 0xFF);
-  }, 6000);
+  }, 3000);
   setTimeout(function () {
-    ledstrip.fill(0x00, 0x00, 0x00);
-    ledstrip.disconnect();
-  }, 8000);
+    disconnectLed();
+  }, 4000);
 
   res.send();
 });
@@ -34,37 +86,22 @@ router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
     speed = Number(req.param('speed')),
-    numLEDs = 24,
-    mySpiDevice = '/dev/spidev0.0';
+    numLEDs = 24;
 
   // connecting to SPI
-  ledstrip.connect(numLEDs, mySpiDevice);
-
-  // o.k., lets do some colorful animation
+  ledstrip.connect(numLEDs);
   var myDisplayBuffer = new Buffer(numLEDs * 3);
-  var animationTick = 0.005;
-  var angle = 0;
-  var ledDistance = 0.3;
 
-  setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      angle = (angle < Math.PI * 2) ? angle : angle - Math.PI * 2;
-      for (var i = 0; i < myDisplayBuffer.length; i += 3) {
-        //red
-        myDisplayBuffer[i] = 128 + Math.sin(angle + (i / 3) * ledDistance) * 128;
-        //green
-        myDisplayBuffer[i + 1] = 128 + Math.sin(angle * -5 + (i / 3) * ledDistance) * 128;
-        //blue
-        myDisplayBuffer[i + 2] = 128 + Math.sin(angle * 7 + (i / 3) * ledDistance) * 128;
-      }
-      ledstrip.sendRgbBuf(myDisplayBuffer);
-      angle += animationTick;
-    }
-  }, speed);
+  if (anim === 'rainbow') {
+    rainbow(myDisplayBuffer, speed);
+  } else if (anim === 'flash') {
+    flash(myDisplayBuffer, speed, colour);
+  } else {
+    standard(myDisplayBuffer, speed, colour);
+  }
 
   setTimeout(function () {
-    ledstrip.fill(0x00, 0x00, 0x00);
-    ledstrip.disconnect();
+    disconnectLed();
   }, 5000);
 
   res.send();
