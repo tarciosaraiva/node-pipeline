@@ -12,7 +12,7 @@ function rainbow(buffer, speed) {
   var angle = 0;
   var ledDistance = 0.3;
 
-  setInterval(function () {
+  return setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       angle = (angle < Math.PI * 2) ? angle : angle - Math.PI * 2;
       for (var i = 0; i < buffer.length; i += 3) {
@@ -41,7 +41,7 @@ function hexToRgb(hex) {
 function flash(buffer, speed, colour) {
   var rgb = hexToRgb(colour),
     onState = false;
-  setInterval(function () {
+  return setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       if (onState) {
         ledstrip.fill(0x00, 0x00, 0x00);
@@ -54,7 +54,7 @@ function flash(buffer, speed, colour) {
 }
 
 function standard(buffer, speed, colour) {
-  flash(buffer, speed, colour);
+  return flash(buffer, speed, colour);
 }
 
 /* GET users listing. */
@@ -85,22 +85,23 @@ router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
     speed = Number(req.param('speed')),
-    numLEDs = 24;
+    numLEDs = 24, intervalId;
 
   // connecting to SPI
   ledstrip.connect(numLEDs);
   var myDisplayBuffer = new Buffer(numLEDs * 3);
 
   if (anim === 'rainbow') {
-    rainbow(myDisplayBuffer, speed);
+    intervalId = rainbow(myDisplayBuffer, speed);
   } else if (anim === 'flash') {
-    flash(myDisplayBuffer, speed, colour);
+    intervalId = flash(myDisplayBuffer, speed, colour);
   } else {
-    standard(myDisplayBuffer, speed, colour);
+    intervalId = standard(myDisplayBuffer, speed, colour);
   }
 
   setTimeout(function () {
     disconnectLed();
+    clearInterval(intervalId);
   }, 5000);
 
   res.send();
