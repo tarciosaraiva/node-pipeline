@@ -14,23 +14,19 @@ router.get('/test', function (req, res) {
 
   // do some fancy stuff
   ledstripe.fill(0xFF, 0x00, 0x00);
-  console.log("red");
   setTimeout(function () {
     ledstripe.fill(0x00, 0xFF, 0x00);
-    console.log("green")
-  }, 1000);
+  }, 2000);
   setTimeout(function () {
     ledstripe.fill(0x00, 0x00, 0xFF);
-    console.log("blue")
   }, 2000);
   setTimeout(function () {
     ledstripe.fill(0xFF, 0xFF, 0xFF);
-    console.log("white")
-  }, 3000);
+  }, 2000);
   setTimeout(function () {
+    ledstripe.fill(0x00, 0x00, 0x00);
     ledstripe.disconnect();
-    process.exit()
-  }, 4000);
+  }, 2000);
 
   res.send();
 });
