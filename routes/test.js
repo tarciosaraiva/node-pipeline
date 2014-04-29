@@ -34,7 +34,7 @@ router.post('/test', function (req, res) {
 router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
-    speed = req.param('speed');
+    speed = Number(req.param('speed'));
 
   var numLEDs = 24,
     myStripeType = 'LPD8806',
@@ -48,6 +48,7 @@ router.post('/animate', function (req, res) {
   var animationTick = 0.005;
   var angle = 0;
   var ledDistance = 0.3;
+
   setInterval(function () {
     angle = (angle < Math.PI * 2) ? angle : angle - Math.PI * 2;
     for (var i = 0; i < myDisplayBuffer.length; i += 3) {
@@ -61,6 +62,11 @@ router.post('/animate', function (req, res) {
     ledstripe.sendRgbBuf(myDisplayBuffer);
     angle += animationTick;
   }, speed);
+
+  setTimeout(function () {
+    ledstripe.fill(0x00, 0x00, 0x00);
+    ledstripe.disconnect();
+  }, 5000);
 
   res.send();
 });
