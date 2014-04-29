@@ -58,7 +58,7 @@ router.post('/animate', function (req, res) {
       //blue
       myDisplayBuffer[i + 2] = 128 + Math.sin(angle * 7 + (i / 3) * ledDistance) * 128;
     }
-    myLedStripe.sendRgbBuf(myDisplayBuffer);
+    ledstripe.sendRgbBuf(myDisplayBuffer);
     angle += animationTick;
   }, speed);
 
