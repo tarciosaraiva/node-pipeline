@@ -2,7 +2,7 @@ mixin fullTextGroup(label)
   div.form-group
     label.control-label.col-md-2(for='length')= label
     div.col-md-3
-      input#length.form-control(type='text')
+      input#length.form-control(type='text', ng-model='stripeLength')
 
 mixin colorGroup
   div.form-group
@@ -32,20 +32,20 @@ mixin buildingColorGroup
   div.form-group
     label.control-label.col-md-2(for='building') Building status
     div.col-md-3
-      select#building.form-control
+      select#building.form-control(ng-model='building.animation')
         option(value='') -- Animation --
         option(value='standard') Standard
         option(value='rainbow') Rainbow
         option(value='flashing') Flashing
     div.col-md-3
       div.input-group.colorpicker-anim
-        input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF')
+        input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF', ng-model='building.colour')
         span.input-group-addon
           i
     div.col-md-2
-      input#speed.form-control(type='text', placeholder='Speed in ms')
+      input#speed.form-control(type='text', placeholder='Speed in ms', ng-model='building.speed')
     div.col-md-2
-      button.btn.btn-info.form-control Show me
+      button.btn.btn-info.form-control(ng-click='animate()') Show me
 
 mixin buttonGroup(label, buttonName, buttonLabel, message)
   div.form-group
