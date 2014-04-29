@@ -6,11 +6,10 @@ var router = express.Router();
 router.post('/test', function (req, res) {
   // everything possibly sane
   var numLEDs = Number(req.param('length')),
-    myStripeType = 'LPD8806',
     mySpiDevice = '/dev/spidev0.0';
 
   // connecting to SPI
-  ledstrip.connect(numLEDs, myStripeType, mySpiDevice);
+  ledstrip.connect(numLEDs, mySpiDevice);
 
   // do some fancy stuff
   ledstrip.fill(0xFF, 0x00, 0x00);
@@ -34,14 +33,12 @@ router.post('/test', function (req, res) {
 router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
-    speed = Number(req.param('speed'));
-
-  var numLEDs = 24,
-    myStripeType = 'LPD8806',
+    speed = Number(req.param('speed')),
+    numLEDs = 24,
     mySpiDevice = '/dev/spidev0.0';
 
   // connecting to SPI
-  ledstrip.connect(numLEDs, myStripeType, mySpiDevice);
+  ledstrip.connect(numLEDs, mySpiDevice);
 
   // o.k., lets do some colorful animation
   var myDisplayBuffer = new Buffer(numLEDs * 3);
