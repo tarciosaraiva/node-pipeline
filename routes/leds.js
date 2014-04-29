@@ -39,23 +39,22 @@ function hexToRgb(hex) {
 }
 
 function flash(buffer, speed, colour) {
-  var rgb = hexToRgb(colour);
+  var rgb = hexToRgb(colour),
+    onState = false;
   setInterval(function () {
     if (ledstrip.isBufferOpen()) {
-      ledstrip.fill(rgb.r, rgb.g, rgb.b);
-      ledstrip.fill(0x00, 0x00, 0x00);
+      if (onState) {
+        ledstrip.fill(0x00, 0x00, 0x00);
+      } else {
+        ledstrip.fill(rgb.r, rgb.g, rgb.b);
+      }
+      onState = !onState;
     }
   }, speed);
 }
 
 function standard(buffer, speed, colour) {
-  var rgb = hexToRgb(colour);
-  setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      ledstrip.fill(rgb.r, rgb.g, rgb.b);
-      ledstrip.fill(0x00, 0x00, 0x00);
-    }
-  }, speed);
+  flash(buffer, speed, colour);
 }
 
 /* GET users listing. */
