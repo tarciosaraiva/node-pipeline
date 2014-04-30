@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, $http) {
+app.controller('LedCtrl', function ($scope, $http) {
   $scope.stripeLength = 24;
   $scope.building = {
     animation: 'rainbow',

@@ -1,0 +1,27 @@
+div.row(ng-controller='PipelineCtrl')
+  div.col-md-12
+    form(role='form').form-horizontal
+      h3 Pipeline
+      div.well
+        div(ng-repeat='p in pipelines')
+          div.form-group
+            label.control-label.col-md-2(for='pipeline-name') Pipeline name
+            div.col-md-6
+              input#pipeline-name.form-control(type='text', ng-model='p.name')
+            div.col-md-2
+              button.btn.btn-success.form-control(ng-click='addStage()') Add stage
+            div.col-md-2
+              button.btn.btn-info.form-control(ng-click='testPipeline()') Test pipeline
+          div.form-group(ng-repeat='s in p.stages')
+            label.control-label.col-md-2(for='stage-name') Stage information
+            div.col-md-4
+              input#stage-name.form-control(type='text', placeholder='Name', ng-model='s.name')
+            div.col-md-1
+              input#stage-length.form-control(type='text', placeholder='Length', ng-model='s.length')
+            div.col-md-1
+              input#stage-length.form-control(type='text', placeholder='Length', ng-model='s.offset')
+            div.col-md-2.col-md-offset-2
+              button.btn.btn-info.form-control(ng-click='testStage()') Test stage
+        div.form-group
+          div.col-md-3.col-md-offset-2
+            button.btn.btn-primary.form-control(ng-click='addPipeline()') Add pipeline

@@ -1,0 +1,9 @@
+div.row(ng-controller='LedCtrl')
+  div.col-md-12
+    form(role='form').form-horizontal
+      h3 LED strip
+      div.well
+        +fullTextGroup('LED length')
+        +buttonGroup('Test your LED', btnTestLed, 'Execute test', 'I will run a simple test to verify connectivity with the LED strip using the status colours below.')
+        +colorGroup
+        +buildingColorGroup

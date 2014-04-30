@@ -6,58 +6,12 @@ block content
     div.row
       div.col-md-12
         h1= title
+          br
+          small Configure your build pipeline as quick as you can fart.
         hr
     div.row
-      div.col-md-3
-        ul.nav.nav-pills.nav-stacked
-          li.active
-            a(href='#led') LED strip
-          li
-            a(href='#queue') Pipeline
-          li
-            a(href='#sounds') Sounds
-          li
-            a(href='#app') Application
-      div.col-md-9
-        div.row(ng-controller='MainCtrl')
-          form#led(role='form').form-horizontal
-            fieldset 
-              legend LED strip
-              +fullTextGroup('LED length')
-              +buttonGroup('Test your LED', btnTestLed, 'Execute test', 'I will run a simple test to verify connectivity with the LED strip using the status colours below.')
-              +colorGroup
-              +buildingColorGroup
-        div.row
-          form#queue(role='form').form-horizontal
-            fieldset 
-              legend Pipeline
-              div.form-group
-                label.control-label.col-md-2(for='pipeline-name') Pipeline name
-                div.col-md-8
-                  input#pipeline-name.form-control(type='text')
-                div.col-md-2
-                  button#add-stage.btn.btn-info.form-control Add stage
-              div.form-group
-                label.control-label.col-md-2(for='stage-name') Stage length
-                div.col-md-10
-                  table.table.table-bordered
-                    tr
-                      - for (var x = 0; x < 32; x++)
-                        td &nbsp;
-
-              div.form-group
-                div.col-md-3.col-md-offset-2
-                  button#add-pipeline.btn.btn-primary.form-control Add pipeline
-        div.row
-          form#sounds(role='form').form-horizontal
-            fieldset 
-              legend Sounds
-              +checkboxGroup('sounds', 'Enable sounds')
-              +fileUploadGroup('successSound', 'Success')
-              +fileUploadGroup('failSound', 'Fail')
-              +fileUploadGroup('abortSound', 'Abort')
-              +fileUploadGroup('unstableSound', 'Unstable')
-        div.row
-          form#app(role='form').form-horizontal
-            fieldset 
-              legend Application
+      div.col-md-12
+        include mixins/led-config.jade
+        include mixins/pipeline-config.jade
+        include mixins/sounds-config.jade
+        include mixins/app-config.jade

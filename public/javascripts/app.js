@@ -1,11 +1,6 @@
 'use strict';
 
-var app = angular.module('pipeline', ['ngRoute', 'ngResource']).config(function ($routeProvider) {
-  $routeProvider
-    .when('/', {
-      controller: 'MainCtrl'
-    });
-});
+var app = angular.module('pipeline', ['ngResource']);
 
 $(function () {
   [{
