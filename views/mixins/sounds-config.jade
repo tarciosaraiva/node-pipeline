@@ -1,10 +1,7 @@
-div.row(ng-controller='SoundsCtrl')
+div.row(ng-controller='SoundsCtrl', flow-init)
   div.col-md-12
     form(role='form').form-horizontal
       h3 Sounds
       div.well
         +checkboxGroup('sounds', 'Enable sounds')
-        +fileUploadGroup('successSound', 'Success')
-        +fileUploadGroup('failSound', 'Fail')
-        +fileUploadGroup('abortSound', 'Abort')
-        +fileUploadGroup('unstableSound', 'Unstable')
+        +fileUploadGroup('', '')

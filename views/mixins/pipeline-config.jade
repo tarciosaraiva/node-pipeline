@@ -14,6 +14,8 @@ div.row(ng-controller='PipelineCtrl')
               button.btn.btn-info.form-control(ng-click='testPipeline()') Test pipeline
           div.form-group(ng-repeat='s in p.stages')
             label.control-label.col-md-2(for='stage-name') Stage information
+              br
+              small.text-muted Name, length and offset
             div.col-md-4
               input#stage-name.form-control(type='text', placeholder='Name', ng-model='s.name')
             div.col-md-1

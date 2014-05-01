@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('pipeline', ['ngResource']);
+var app = angular.module('pipeline', ['ngResource', 'flow']);
 
 $(function () {
   [{
