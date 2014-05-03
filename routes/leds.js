@@ -30,21 +30,42 @@ function rainbow(buffer, speed) {
 }
 
 function knightRider(buffer, speed) {
-  var ledDistance = 0.3, whatever = 128, color;
+  var i = 0,
+    lit = 0,
+    modifier = 1,
+    invert = false;
 
   return setInterval(function () {
     if (ledstrip.isBufferOpen()) {
-      for (var i = 0; i < buffer.length; i += 3) {
-        // red
-        color = 128 + ((i / 3) * ledDistance) * whatever;
-        buffer[i] = color;
-        // green and blue
-        buffer[i + 1] = 0x00;
-        buffer[i + 2] = 0x00;
+      if (invert) {
+        for (i = buffer.length; i > 0; i -= 3) {
+          // red
+          buffer[i] = (i === lit) ? 0xFF : 0x00;
+          // green and blue
+          buffer[i + 1] = 0x00;
+          buffer[i + 2] = 0x00;
+        }
+      } else {
+        for (i = 0; i < buffer.length; i += 3) {
+          // red
+          buffer[i] = (i === lit) ? 0xFF : 0x00;
+          // green and blue
+          buffer[i + 1] = 0x00;
+          buffer[i + 2] = 0x00;
+        }
       }
+
       ledstrip.sendRgbBuf(buffer);
-      if (color >= 255) {
-        whatever = whatever * -1;
+      lit += (3 * modifier);
+
+      if (lit >= buffer.length) {
+        lit = buffer.length;
+        modifier *= -1;
+        invert = !invert;
+      } else if (lit <= 0) {
+        lit = 0;
+        modifier *= -1;
+        invert = !invert;
       }
     }
   }, speed);
@@ -75,7 +96,28 @@ function flash(buffer, speed, colour) {
 }
 
 function standard(buffer, speed, colour) {
-  return flash(buffer, speed, colour);
+  var i = 0,
+    lit = 0,
+    rgb = hexToRgb(colour);
+
+  return setInterval(function () {
+    if (ledstrip.isBufferOpen()) {
+      for (i = 0; i < buffer.length; i += 3) {
+        // red
+        buffer[i] = rgb.r;
+        // green
+        buffer[i + 1] = rgb.g;
+        // blue
+        buffer[i + 2] = rgb.b;
+      }
+
+      ledstrip.sendRgbBuf(buffer);
+      lit += 3;
+      if (lit >= buffer.length) {
+        lit = 0;
+      }
+    }
+  }, speed);
 }
 
 /* GET users listing. */

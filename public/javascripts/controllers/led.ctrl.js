@@ -3,7 +3,7 @@
 app.controller('LedCtrl', function ($scope, $http) {
   $scope.stripeLength = 24;
   $scope.building = {
-    animation: 'rainbow',
+    animation: 'standard',
     colour: '#0000ff',
     speed: 100
   };
