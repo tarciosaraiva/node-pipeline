@@ -9,22 +9,22 @@ mixin colorGroup
     label.control-label.col-md-2(for='success') Status colours
     div.col-md-2
       div.input-group.colorpicker-s
-        input#success.form-control(type='text', placeholder='Success')
+        input#success.form-control(type='text', placeholder='Success', maxlength='7')
         span.input-group-addon
           i
     div.col-md-2
       div.input-group.colorpicker-f
-        input#fail.form-control(type='text', placeholder='Fail')
+        input#fail.form-control(type='text', placeholder='Fail', maxlength='7')
         span.input-group-addon
           i
     div.col-md-2
       div.input-group.colorpicker-a
-        input#abort.form-control(type='text', placeholder='Abort')
+        input#abort.form-control(type='text', placeholder='Abort', maxlength='7')
         span.input-group-addon
           i
     div.col-md-2
       div.input-group.colorpicker-u
-        input#unstable.form-control(type='text', placeholder='Unstable')
+        input#unstable.form-control(type='text', placeholder='Unstable', maxlength='7')
         span.input-group-addon
           i
 
@@ -40,7 +40,7 @@ mixin buildingColorGroup
         option(value='kinghtrider') Knight Rider
     div.col-md-3
       div.input-group.colorpicker-anim
-        input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF', ng-model='building.colour')
+        input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF', ng-model='building.colour', maxlength='7')
         span.input-group-addon
           i
     div.col-md-2
