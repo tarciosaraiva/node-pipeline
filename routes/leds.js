@@ -104,11 +104,11 @@ function standard(buffer, speed, colour) {
     if (ledstrip.isBufferOpen()) {
       for (i = 0; i < buffer.length; i += 3) {
         // red
-        buffer[i] = rgb.r;
+        buffer[i] = (lit === i) ? rgb.r : 0x00;
         // green
-        buffer[i + 1] = rgb.g;
+        buffer[i + 1] = (lit === i) ? rgb.g : 0x00;
         // blue
-        buffer[i + 2] = rgb.b;
+        buffer[i + 2] = (lit === i) ? rgb.b : 0x00;
       }
 
       ledstrip.sendRgbBuf(buffer);
@@ -157,7 +157,7 @@ router.post('/animate', function (req, res) {
 
   if (anim === 'rainbow') {
     intervalId = rainbow(myDisplayBuffer, speed);
-  } else if (anim === 'flash') {
+  } else if (anim === 'flashing') {
     intervalId = flash(myDisplayBuffer, speed, colour);
   } else if (anim === 'kinghtrider') {
     intervalId = knightRider(myDisplayBuffer, speed);
