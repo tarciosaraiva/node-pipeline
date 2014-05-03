@@ -29,6 +29,21 @@ function rainbow(buffer, speed) {
   }, speed);
 }
 
+function knightRider(buffer, speed) {
+  var ledDistance = 0.3;
+  return setInterval(function () {
+    if (ledstrip.isBufferOpen()) {
+      for (var i = 0; i < buffer.length; i += 3) {
+        // red
+        buffer[i] = 128 + Math.sin(angle + (i / 3) * ledDistance) * 128;
+        // green and blue
+        buffer[i + 1] = 0x00;
+        buffer[i + 2] = 0x00;
+      }
+    }
+  }, speed);
+}
+
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
@@ -85,7 +100,8 @@ router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
     colour = req.param('colour'),
     speed = Number(req.param('speed')),
-    numLEDs = 24, intervalId;
+    numLEDs = 24,
+    intervalId;
 
   // connecting to SPI
   ledstrip.connect(numLEDs);
@@ -95,6 +111,8 @@ router.post('/animate', function (req, res) {
     intervalId = rainbow(myDisplayBuffer, speed);
   } else if (anim === 'flash') {
     intervalId = flash(myDisplayBuffer, speed, colour);
+  } else if (anim === 'kinghtrider') {
+    intervalId = knightRider(myDisplayBuffer, speed);
   } else {
     intervalId = standard(myDisplayBuffer, speed, colour);
   }
