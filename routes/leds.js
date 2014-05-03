@@ -30,21 +30,22 @@ function rainbow(buffer, speed) {
 }
 
 function knightRider(buffer, speed) {
-  var ledDistance = 0.3;
-  var angle = 0;
-  var animationTick = 0.005;
+  var ledDistance = 0.3, whatever = 128, color;
 
   return setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       for (var i = 0; i < buffer.length; i += 3) {
         // red
-        buffer[i] = 128 + Math.sin(angle + (i / 3) * ledDistance) * 128;
+        color = 128 + ((i / 3) * ledDistance) * whatever;
+        buffer[i] = color;
         // green and blue
         buffer[i + 1] = 0x00;
         buffer[i + 2] = 0x00;
       }
       ledstrip.sendRgbBuf(buffer);
-      angle += animationTick;
+      if (color >= 255) {
+        whatever = whatever * -1;
+      }
     }
   }, speed);
 }
@@ -117,7 +118,7 @@ router.post('/animate', function (req, res) {
   } else if (anim === 'flash') {
     intervalId = flash(myDisplayBuffer, speed, colour);
   } else if (anim === 'kinghtrider') {
-    intervalId = knightRider(myDisplayBuffer, speed);
+    intervalId = knightRider(new Buffer(3), speed);
   } else {
     intervalId = standard(myDisplayBuffer, speed, colour);
   }
@@ -125,7 +126,7 @@ router.post('/animate', function (req, res) {
   setTimeout(function () {
     disconnectLed();
     clearInterval(intervalId);
-  }, 5000);
+  }, 10000);
 
   res.send();
 });
