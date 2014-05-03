@@ -31,6 +31,9 @@ function rainbow(buffer, speed) {
 
 function knightRider(buffer, speed) {
   var ledDistance = 0.3;
+  var angle = 0;
+  var animationTick = 0.005;
+
   return setInterval(function () {
     if (ledstrip.isBufferOpen()) {
       for (var i = 0; i < buffer.length; i += 3) {
@@ -40,6 +43,8 @@ function knightRider(buffer, speed) {
         buffer[i + 1] = 0x00;
         buffer[i + 2] = 0x00;
       }
+      ledstrip.sendRgbBuf(buffer);
+      angle += animationTick;
     }
   }, speed);
 }
