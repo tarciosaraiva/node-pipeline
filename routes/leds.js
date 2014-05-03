@@ -118,7 +118,7 @@ router.post('/animate', function (req, res) {
   } else if (anim === 'flash') {
     intervalId = flash(myDisplayBuffer, speed, colour);
   } else if (anim === 'kinghtrider') {
-    intervalId = knightRider(new Buffer(3), speed);
+    intervalId = knightRider(myDisplayBuffer, speed);
   } else {
     intervalId = standard(myDisplayBuffer, speed, colour);
   }
