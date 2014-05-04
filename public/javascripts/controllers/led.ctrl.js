@@ -16,4 +16,9 @@ app.controller('LedCtrl', function ($scope, $http) {
   $scope.animate = function () {
     $http.post('/leds/animate', $scope.building)
   };
+
+  $scope.save = function () {
+
+  };
+
 });

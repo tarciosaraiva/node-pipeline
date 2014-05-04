@@ -27,3 +27,7 @@ div.row(ng-controller='PipelineCtrl')
         div.form-group
           div.col-md-3.col-md-offset-2
             button.btn.btn-primary.form-control(ng-click='addPipeline()') Add pipeline
+          div.col-md-2.col-md-offset-5
+            button.btn.btn-primary.form-control(ng-click=fn)
+              span.glyphicon.glyphicon-floppy-save
+              &nbsp; Save config

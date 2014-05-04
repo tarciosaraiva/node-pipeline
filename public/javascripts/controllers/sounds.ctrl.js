@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('SoundsCtrl', function ($scope, $http) {
-  $scope.enableSounds = true;
+  $scope.enableSounds = false;
   $scope.files = 0;
 
   $scope.sounds = {

@@ -1,75 +1,7 @@
 var express = require('express');
 var ledstrip = require('./../lib/ledstrip');
 var router = express.Router();
-
-function disconnectLed() {
-  ledstrip.fill(0x00, 0x00, 0x00);
-  ledstrip.disconnect();
-}
-
-function rainbow(buffer, speed) {
-  var animationTick = 0.005;
-  var angle = 0;
-  var ledDistance = 0.3;
-
-  return setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      angle = (angle < Math.PI * 2) ? angle : angle - Math.PI * 2;
-      for (var i = 0; i < buffer.length; i += 3) {
-        //red
-        buffer[i] = 128 + Math.sin(angle + (i / 3) * ledDistance) * 128;
-        //green
-        buffer[i + 1] = 128 + Math.sin(angle * -5 + (i / 3) * ledDistance) * 128;
-        //blue
-        buffer[i + 2] = 128 + Math.sin(angle * 7 + (i / 3) * ledDistance) * 128;
-      }
-      ledstrip.sendRgbBuf(buffer);
-      angle += animationTick;
-    }
-  }, speed);
-}
-
-function knightRider(buffer, speed) {
-  var i = 0,
-    lit = 0,
-    modifier = 1,
-    invert = false;
-
-  return setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      if (invert) {
-        for (i = buffer.length; i > 0; i -= 3) {
-          // red
-          buffer[i] = (i === lit) ? 0xFF : 0x00;
-          // green and blue
-          buffer[i + 1] = 0x00;
-          buffer[i + 2] = 0x00;
-        }
-      } else {
-        for (i = 0; i < buffer.length; i += 3) {
-          // red
-          buffer[i] = (i === lit) ? 0xFF : 0x00;
-          // green and blue
-          buffer[i + 1] = 0x00;
-          buffer[i + 2] = 0x00;
-        }
-      }
-
-      ledstrip.sendRgbBuf(buffer);
-      lit += (3 * modifier);
-
-      if (lit >= buffer.length) {
-        lit = buffer.length;
-        modifier *= -1;
-        invert = !invert;
-      } else if (lit <= 0) {
-        lit = 0;
-        modifier *= -1;
-        invert = !invert;
-      }
-    }
-  }, speed);
-}
+var config = require('./../lib/config');
 
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -80,96 +12,44 @@ function hexToRgb(hex) {
   } : null;
 }
 
-function flash(buffer, speed, colour) {
-  var rgb = hexToRgb(colour),
-    onState = false;
-  return setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      if (onState) {
-        ledstrip.fill(0x00, 0x00, 0x00);
-      } else {
-        ledstrip.fill(rgb.r, rgb.g, rgb.b);
-      }
-      onState = !onState;
-    }
-  }, speed);
-}
-
-function standard(buffer, speed, colour) {
-  var i = 0,
-    lit = 0,
-    rgb = hexToRgb(colour);
-
-  return setInterval(function () {
-    if (ledstrip.isBufferOpen()) {
-      for (i = 0; i < buffer.length; i += 3) {
-        // red
-        buffer[i] = (lit === i) ? rgb.r : 0x00;
-        // green
-        buffer[i + 1] = (lit === i) ? rgb.g : 0x00;
-        // blue
-        buffer[i + 2] = (lit === i) ? rgb.b : 0x00;
-      }
-
-      ledstrip.sendRgbBuf(buffer);
-      lit += 3;
-      if (lit >= buffer.length) {
-        lit = 0;
-      }
-    }
-  }, speed);
-}
-
 /* GET users listing. */
 router.post('/test', function (req, res) {
-  var numLEDs = Number(req.param('length'));
+  var start = Number(req.param('start')),
+    end = Number(req.param('end')),
+    LED_STRIP = config.get('leds:length');
 
-  ledstrip.connect(numLEDs);
-
-  // do some fancy stuff
-  ledstrip.fill(0xFF, 0x00, 0x00);
-  setTimeout(function () {
-    ledstrip.fill(0x00, 0xFF, 0x00);
-  }, 1000);
-  setTimeout(function () {
-    ledstrip.fill(0x00, 0x00, 0xFF);
-  }, 2000);
-  setTimeout(function () {
-    ledstrip.fill(0xFF, 0xFF, 0xFF);
-  }, 3000);
-  setTimeout(function () {
-    disconnectLed();
-  }, 4000);
+  ledstrip.connect(LED_STRIP);
+  ledstrip.test(start, end);
 
   res.send();
 });
 
 router.post('/animate', function (req, res) {
   var anim = req.param('animation'),
-    colour = req.param('colour'),
+    colour = hexToRgb(req.param('colour')),
     speed = Number(req.param('speed')),
-    numLEDs = 24,
-    intervalId;
+    LED_STRIP = config.get('leds:length');
 
   // connecting to SPI
-  ledstrip.connect(numLEDs);
-  var myDisplayBuffer = new Buffer(numLEDs * 3);
+  ledstrip.connect(LED_STRIP);
+  ledstrip.animate(anim, new Buffer(LED_STRIP * 3), {
+    speed: speed,
+    colour: colour
+  });
 
-  if (anim === 'rainbow') {
-    intervalId = rainbow(myDisplayBuffer, speed);
-  } else if (anim === 'flashing') {
-    intervalId = flash(myDisplayBuffer, speed, colour);
-  } else if (anim === 'kinghtrider') {
-    intervalId = knightRider(myDisplayBuffer, speed);
-  } else {
-    intervalId = standard(myDisplayBuffer, speed, colour);
-  }
+  res.send();
+});
 
-  setTimeout(function () {
-    disconnectLed();
-    clearInterval(intervalId);
-  }, 10000);
+router.get('/', function (req, res) {
+  res.json(config.get('leds'));
+});
 
+router.put('/', function (req, res) {
+  var payload = req.body;
+  config.merge('leds', payload);
+  config.save(function (err) {
+    if (err) res.send(500);
+  });
   res.send();
 });
 

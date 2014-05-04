@@ -28,6 +28,13 @@ mixin colorGroup
         span.input-group-addon
           i
 
+mixin saveConfig(fn)
+  div.form-group
+    div.col-md-2.col-md-offset-10
+      button.btn.btn-primary.form-control(ng-click=fn)
+        span.glyphicon.glyphicon-floppy-save
+        &nbsp; Save config
+
 mixin buildingColorGroup
   div.form-group
     label.control-label.col-md-2(for='building') Building status
@@ -52,7 +59,7 @@ mixin buttonGroup(label, buttonName, buttonLabel, message)
   div.form-group
     label.control-label.col-md-2(for='length')= label
     div.col-md-3
-      button.btn.btn-primary.form-control(id=buttonName, name=buttonName,ng-click='executeTest()')= buttonLabel
+      button.btn.btn-info.form-control(id=buttonName, name=buttonName,ng-click='executeTest()')= buttonLabel
     div.col-md-7
       small.help-block= message
 

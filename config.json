@@ -1,0 +1,19 @@
+{
+  "leds": {
+    "length": 12,
+    "colours": {
+      "success": "#00FF00",
+      "fail": "#FF0000",
+      "abort": "#000000",
+      "unstable": "#00FFFF"
+    },
+    "building": {
+      "animation": "standard",
+      "colour": "#123456",
+      "speed": 25
+    }
+  },
+  "pipelines": {},
+  "sounds": {},
+  "application": {}
+}
