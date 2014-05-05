@@ -1,16 +1,16 @@
 {
   "leds": {
-    "length": 12,
+    "length": "44",
     "colours": {
-      "success": "#00FF00",
+      "success": "#123456",
       "fail": "#FF0000",
-      "abort": "#000000",
-      "unstable": "#00FFFF"
+      "abort": "#FFFFFF",
+      "unstable": "#FFFF00"
     },
     "building": {
-      "animation": "standard",
-      "colour": "#123456",
-      "speed": 25
+      "animation": "kinghtrider",
+      "colour": "#0000FF",
+      "speed": "111"
     }
   },
   "pipelines": {},

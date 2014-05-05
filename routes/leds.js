@@ -12,7 +12,6 @@ function hexToRgb(hex) {
   } : null;
 }
 
-/* GET users listing. */
 router.post('/test', function (req, res) {
   var start = Number(req.param('start')),
     end = Number(req.param('end')),
@@ -30,7 +29,6 @@ router.post('/animate', function (req, res) {
     speed = Number(req.param('speed')),
     LED_STRIP = config.get('leds:length');
 
-  // connecting to SPI
   ledstrip.connect(LED_STRIP);
   ledstrip.animate(anim, new Buffer(LED_STRIP * 3), {
     speed: speed,
@@ -48,9 +46,11 @@ router.put('/', function (req, res) {
   var payload = req.body;
   config.merge('leds', payload);
   config.save(function (err) {
-    if (err) res.send(500);
+    if (err) {
+      res.send(500);
+    }
   });
-  res.send();
+  res.json('Configuration saved successfully.');
 });
 
 module.exports = router;
