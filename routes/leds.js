@@ -28,10 +28,12 @@ router.post('/animate', function (req, res) {
     length = Number(req.param('length'));
 
   ledstrip.connect(length);
-  ledstrip.animate(building.animation, new Buffer(length * 3), {
-    speed: Number(building.speed),
-    colour: building.colour
-  });
+  ledstrip.animate(
+    building.animation,
+    new Buffer(length * 3), {
+      speed: Number(building.speed),
+      colour: hexToRgb(building.colour)
+    });
 
   res.send();
 });
