@@ -17,7 +17,7 @@ router.post('/test', function (req, res) {
     end = Number(req.param('end')),
     length = Number(req.param('length'));
 
-  ledstrip.connect(LED_STRIP);
+  ledstrip.connect(length);
   ledstrip.test(start, end);
 
   res.send();
