@@ -50,8 +50,8 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
 
   $scope.testPipeline = function () {
     var stages = this.p.stages,
-      start = stages[0].offset,
-      end = start + (stages[stages.length - 1].length + stages[stages.length - 1].offset);
+      start = Number(stages[0].offset),
+      end = start + (Number(stages[stages.length - 1].length) + Number(stages[stages.length - 1].offset));
     $http.post('/api/leds/test', {
       length: $rootScope.stripLength,
       start: start,
@@ -60,8 +60,8 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
   };
 
   $scope.testStage = function () {
-    var start = this.s.offset,
-      end = start + this.s.length;
+    var start = Number(this.s.offset),
+      end = start + Number(this.s.length);
     $http.post('/api/leds/test', {
       length: $rootScope.stripLength,
       start: start,
