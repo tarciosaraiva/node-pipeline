@@ -12,7 +12,9 @@ router.put('/', function (req, res) {
   var payload = req.body;
   config.merge('pipelines', payload);
   config.save(function (err) {
-    if (err) res.send(500);
+    if (err) {
+      res.send(500);
+    }
   });
   res.send();
 });

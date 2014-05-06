@@ -1,6 +1,6 @@
 {
   "leds": {
-    "length": "44",
+    "length": "24",
     "colours": {
       "success": "#123456",
       "fail": "#FF0000",
@@ -13,7 +13,28 @@
       "speed": "111"
     }
   },
-  "pipelines": {},
+  "pipelines": [
+    {
+      "name": "My pipeline",
+      "stages": [
+        {
+          "name": "WF",
+          "length": 10,
+          "offset": 0
+        },
+        {
+          "name": "Stage 7",
+          "offset": 10,
+          "length": 10
+        },
+        {
+          "name": "Stage 9",
+          "offset": 20,
+          "length": "4"
+        }
+      ]
+    }
+  ],
   "sounds": {},
   "application": {}
 }

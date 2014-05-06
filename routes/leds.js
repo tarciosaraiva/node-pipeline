@@ -15,7 +15,7 @@ function hexToRgb(hex) {
 router.post('/test', function (req, res) {
   var start = Number(req.param('start')),
     end = Number(req.param('end')),
-    LED_STRIP = config.get('leds:length');
+    length = Number(req.param('length'));
 
   ledstrip.connect(LED_STRIP);
   ledstrip.test(start, end);
@@ -24,15 +24,13 @@ router.post('/test', function (req, res) {
 });
 
 router.post('/animate', function (req, res) {
-  var anim = req.param('animation'),
-    colour = hexToRgb(req.param('colour')),
-    speed = Number(req.param('speed')),
-    LED_STRIP = config.get('leds:length');
+  var building = req.param('building'),
+    length = Number(req.param('length'));
 
-  ledstrip.connect(LED_STRIP);
-  ledstrip.animate(anim, new Buffer(LED_STRIP * 3), {
-    speed: speed,
-    colour: colour
+  ledstrip.connect(length);
+  ledstrip.animate(building.animation, new Buffer(length * 3), {
+    speed: Number(building.speed),
+    colour: building.colour
   });
 
   res.send();

@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('PipelineCtrl', function ($scope, $http) {
-  var DEFAULT_LENGTH = 1;
+app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
+  var DEFAULT_LENGTH = 10;
   var DEFAULT_OFFSET = 0;
 
+  $scope.canAdd = true;
   $scope.pipelines = [{
     name: 'Pipeline 1',
     stages: [{
@@ -25,15 +26,60 @@ app.controller('PipelineCtrl', function ($scope, $http) {
     var slen = this.p.stages.length,
       offset = slen !== 0 ? this.p.stages.map(function (el) {
         return parseInt(el.offset) + parseInt(el.length);
-      }).reduce(function (pV, cV) {
-        return cV;
+      }).reduce(function (previousVal, currentVal) {
+        return currentVal;
       }) : DEFAULT_OFFSET;
+
+    if (offset >= $rootScope.stripLength) {
+      offset = $rootScope.stripLength;
+      $scope.canAdd = false;
+    }
 
     this.p.stages.push({
       name: 'Stage ' + parseInt(Math.random() * (10 - 1) + 1),
-      offset: offset,
-      length: DEFAULT_LENGTH
+      length: Number(DEFAULT_LENGTH),
+      offset: Number(offset)
     });
   };
+
+  $scope.removeStage = function () {
+    var pipeline = this.$parent.$index,
+      stage = this.$index;
+    $scope.pipelines[pipeline].stages.splice(stage, 1);
+  };
+
+  $scope.testPipeline = function () {
+    var start = this.p.stages[0].offset,
+      end = this.p.stages[this.p.stages.length - 1].offset;
+    $http.post('/api/leds/test', {
+      length: $rootScope.stripLength,
+      start: start,
+      end: end
+    });
+  };
+
+  $scope.testStage = function () {
+    var start = this.s.offset,
+      end = start + this.s.length;
+    $http.post('/api/leds/test', {
+      length: $rootScope.stripLength,
+      start: start,
+      end: end
+    });
+  };
+
+  $scope.load = function () {
+    $http.get('/api/pipelines').success(function (data) {
+      if (data.length > 0) {
+        $scope.pipelines = data;
+      }
+    });
+  };
+
+  $scope.save = function () {
+    $http.put('/api/pipelines', $scope.pipelines);
+  };
+
+  $scope.load();
 
 });

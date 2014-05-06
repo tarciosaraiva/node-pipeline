@@ -9,28 +9,28 @@ div.row(ng-controller='PipelineCtrl')
             div.col-md-6
               input#pipeline-name.form-control(type='text', ng-model='p.name')
             div.col-md-2
-              button.btn.btn-success.form-control(ng-click='addStage()') Add stage
+              button.btn.btn-success.form-control(ng-click='addStage()', ng-disabled='!canAdd') Add stage
             div.col-md-2
               button.btn.btn-info.form-control(ng-click='testPipeline()') Test pipeline
           div.form-group(ng-repeat='s in p.stages')
             label.control-label.col-md-2(for='stage-name') Stage information
               br
-              small.text-muted Name, length and offset
+              small.text-muted Name, offset and length
             div.col-md-4
               input#stage-name.form-control(type='text', placeholder='Name', ng-model='s.name')
             div.col-md-1
+              input#stage-length.form-control(type='text', placeholder='Offset', ng-model='s.offset')
+            div.col-md-1
               input#stage-length.form-control(type='text', placeholder='Length', ng-model='s.length')
             div.col-md-1
-              input#stage-length.form-control(type='text', placeholder='Length', ng-model='s.offset')
-            div.col-md-1
-              button.btn.btn-danger
+              button.btn.btn-danger(ng-click='removeStage()')
                 span.glyphicon.glyphicon-remove
             div.col-md-2.col-md-offset-1
               button.btn.btn-info.form-control(ng-click='testStage()') Test stage
         div.form-group
           div.col-md-3.col-md-offset-2
-            button.btn.btn-primary.form-control(ng-click='addPipeline()') Add pipeline
+            button.btn.btn-primary.form-control(ng-click='addPipeline()', ng-disabled='!canAdd') Add pipeline
           div.col-md-2.col-md-offset-5
-            button.btn.btn-primary.form-control(ng-click=fn)
+            button.btn.btn-primary.form-control(ng-click='save()')
               span.glyphicon.glyphicon-floppy-save
               &nbsp; Save config

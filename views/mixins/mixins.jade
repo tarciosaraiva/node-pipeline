@@ -1,67 +1,9 @@
-mixin fullTextGroup(label)
-  div.form-group
-    label.control-label.col-md-2(for='length')= label
-    div.col-md-3
-      input#length.form-control(type='text', ng-model='leds.length')
-
-mixin colorGroup
-  div.form-group
-    label.control-label.col-md-2(for='success') Status colours
-    div.col-md-2
-      div.input-group.colorpicker-s
-        input#success.form-control(type='text', placeholder='Success', maxlength='7', ng-model='leds.colours.success')
-        span.input-group-addon
-          i
-    div.col-md-2
-      div.input-group.colorpicker-f
-        input#fail.form-control(type='text', placeholder='Fail', maxlength='7', ng-model='leds.colours.fail')
-        span.input-group-addon
-          i
-    div.col-md-2
-      div.input-group.colorpicker-a
-        input#abort.form-control(type='text', placeholder='Abort', maxlength='7', ng-model='leds.colours.abort')
-        span.input-group-addon
-          i
-    div.col-md-2
-      div.input-group.colorpicker-u
-        input#unstable.form-control(type='text', placeholder='Unstable', maxlength='7', ng-model='leds.colours.unstable')
-        span.input-group-addon
-          i
-
 mixin saveConfig(fn)
   div.form-group
     div.col-md-2.col-md-offset-10
       button.btn.btn-primary.form-control(ng-click=fn)
         span.glyphicon.glyphicon-floppy-save
         &nbsp; Save config
-
-mixin buildingColorGroup
-  div.form-group
-    label.control-label.col-md-2(for='building') Building status
-    div.col-md-3
-      select#building.form-control(ng-model='leds.building.animation')
-        option(value='') -- Animation --
-        option(value='standard') Standard
-        option(value='rainbow') Rainbow
-        option(value='flashing') Flashing
-        option(value='kinghtrider') Knight Rider
-    div.col-md-3
-      div.input-group.colorpicker-anim
-        input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF', ng-model='leds.building.colour', maxlength='7')
-        span.input-group-addon
-          i
-    div.col-md-2
-      input#speed.form-control(type='text', placeholder='Speed in ms', ng-model='leds.building.speed')
-    div.col-md-2
-      button.btn.btn-info.form-control(ng-click='animate()') Show me
-
-mixin buttonGroup(label, buttonName, buttonLabel, message)
-  div.form-group
-    label.control-label.col-md-2(for='length')= label
-    div.col-md-3
-      button.btn.btn-info.form-control(id=buttonName, name=buttonName,ng-click='executeTest()')= buttonLabel
-    div.col-md-7
-      small.help-block= message
 
 mixin checkboxGroup(id, label)
   div.form-group

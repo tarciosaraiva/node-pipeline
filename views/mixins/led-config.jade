@@ -3,8 +3,54 @@ div.row(ng-controller='LedCtrl')
     form(role='form').form-horizontal
       h3 LED strip
       div.well
-        +fullTextGroup('LED length')
-        +buttonGroup('Test your LED', btnTestLed, 'Execute test', 'I will run a simple test to verify connectivity with the LED strip using the status colours below.')
-        +colorGroup
-        +buildingColorGroup
+        div.form-group
+          label.control-label.col-md-2(for='length') LED strip length
+          div.col-md-3
+            input#length.form-control(type='text', ng-model='$root.stripLength')
+        div.form-group
+          label.control-label.col-md-2(for='length') Test your LED
+          div.col-md-3
+            button.btn.btn-info.form-control(id='btnTestLed', name='btnTestLed',ng-click='executeTest()') Execute test
+          div.col-md-7
+            small.help-block I will run a simple test to verify connectivity with the LED strip using the status colours below.
+        div.form-group
+          label.control-label.col-md-2(for='success') Status colours
+          div.col-md-2
+            div.input-group.colorpicker-group
+              input#success.form-control(type='text', placeholder='Success', maxlength='7', colorpicker, ng-model='leds.colours.success')
+              span.input-group-addon
+                i(ng-style="{'background-color': leds.colours.success}")
+          div.col-md-2
+            div.input-group.colorpicker-group
+              input#fail.form-control(type='text', placeholder='Fail', maxlength='7', colorpicker, ng-model='leds.colours.fail')
+              span.input-group-addon
+                i(ng-style="{'background-color': leds.colours.fail}")
+          div.col-md-2
+            div.input-group.colorpicker-group
+              input#abort.form-control(type='text', placeholder='Abort', maxlength='7', colorpicker, ng-model='leds.colours.abort')
+              span.input-group-addon
+                i(ng-style="{'background-color': leds.colours.abort}")
+          div.col-md-2
+            div.input-group.colorpicker-group
+              input#unstable.form-control(type='text', placeholder='Unstable', maxlength='7', colorpicker, ng-model='leds.colours.unstable')
+              span.input-group-addon
+                i(ng-style="{'background-color': leds.colours.unstable}")
+        div.form-group
+          label.control-label.col-md-2(for='building') Building status
+          div.col-md-3
+            select#building.form-control(ng-model='leds.building.animation')
+              option(value='') -- Animation --
+              option(value='standard') Standard
+              option(value='rainbow') Rainbow
+              option(value='flashing') Flashing
+              option(value='kinghtrider') Knight Rider
+          div.col-md-3
+            div.input-group.colorpicker-group
+              input#unstable.form-control(type='text', placeholder='Unstable', value='#0000FF', colorpicker, ng-model='leds.building.colour', maxlength='7')
+              span.input-group-addon
+                i(ng-style="{'background-color': leds.building.colour}")
+          div.col-md-2
+            input#speed.form-control(type='text', placeholder='Speed in ms', ng-model='leds.building.speed')
+          div.col-md-2
+            button.btn.btn-info.form-control(ng-click='animate()') Show me
         +saveConfig('save()')
