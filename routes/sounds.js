@@ -1,8 +1,11 @@
+var fs = require('fs');
+var os = require('os');
+var Batch = require('batch');
 var express = require('express');
 var router = express.Router();
 var config = require('./../lib/config');
+var utils = require('./../lib/utils');
 var multiparty = require('multiparty');
-var fs = require('fs');
 
 /* GET sounds configuration */
 router.get('/', function (req, res) {
@@ -21,24 +24,33 @@ router.put('/', function (req, res) {
   res.send();
 });
 
-// test the chunk
-router.get('/upload', function (req, res) {
-  res.json();
-});
-
 router.post('/upload', function (req, res, next) {
-  var form = new multiparty.Form();
-  form.parse(req);
-  form.on('part', function (part) {
-    if (part.filename) {
-      part.pipe(fs.createWriteStream('./uploads/file', {
+  var form = new multiparty.Form(),
+    batch = new Batch();
+
+  batch.push(function (cb) {
+    form.on('field', function (name, value) {
+      if (name === 'flowFilename') {
+        cb(null, value);
+      }
+    });
+  });
+
+  batch.push(function (cb) {
+    form.on('file', function (name, file) {
+      cb(null, file.path);
+    });
+  });
+
+  batch.end(function (err, results) {
+    var streamFile = './uploads/' + results[0];
+    fs.createReadStream(results[1])
+      .pipe(fs.createWriteStream(streamFile, {
         flags: 'a'
       }));
-    }
   });
-  form.on('error', function (err) {
-    if (err) console.log(err);
-  });
+
+  form.parse(req);
   res.send();
 });
 

@@ -24,6 +24,7 @@
   ],
   "homepage": "https://github.com/tarciosaraiva/rpipeline-ui",
   "dependencies": {
+    "batch": "^0.5.0",
     "body-parser": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
