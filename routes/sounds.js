@@ -1,5 +1,4 @@
 var fs = require('fs');
-var os = require('os');
 var Batch = require('batch');
 var express = require('express');
 var router = express.Router();
@@ -43,15 +42,16 @@ router.post('/upload', function (req, res, next) {
   });
 
   batch.end(function (err, results) {
-    var streamFile = './uploads/' + results[0];
+    var file = './uploads/' + results[0];
     fs.createReadStream(results[1])
-      .pipe(fs.createWriteStream(streamFile, {
+      .pipe(fs.createWriteStream(file, {
         flags: 'a'
       }));
+
+    res.send();
   });
 
   form.parse(req);
-  res.send();
 });
 
 module.exports = router;
