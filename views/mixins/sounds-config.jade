@@ -3,5 +3,44 @@ div.row(ng-controller='SoundsCtrl', flow-init)
     form(role='form').form-horizontal
       h3 Sounds
       div.well
-        +checkboxGroup('sounds', 'Enable sounds')
-        +fileUploadGroup('', '')
+        div.form-group
+          div.col-md-offset-2.col-md-9
+            div.checkbox
+              label Enable sounds
+                input(type='checkbox', id=id, name=id, ng-model='sounds.enableSounds')
+        div(ng-show='sounds.enableSounds', flow-files-submitted='$flow.upload()')
+          div.form-group
+            label.control-label.col-md-2(for=id)= label
+            div.col-md-9
+              div.flow-drop(flow-drop)
+                span.btn.btn-default(flow-btn) Upload files
+                strong  OR
+                span  drag and drop your files here
+          div.form-group
+            div.col-md-2.col-md-offset-2
+              a.btn.btn-small.btn-success(ng-click='$flow.resume()') Resume all
+            div.col-md-2
+              a.btn.btn-small.btn-danger(ng-click='$flow.pause()') Pause all
+            div.col-md-2
+              a.btn.btn-small.btn-info(ng-click='$flow.cancel()') Cancel all
+            div.col-md-2
+              span.label.label-info Total Size: {{$flow.getSize()}} bytes
+          div.form-group(ng-repeat='file in $flow.files')
+            div.col-md-6.col-md-offset-2
+              p {{file.relativePath}} ({{file.size}} bytes)
+              div.progress.progress-striped(ng-class='{active: file.isUploading()}')
+                div.progress-bar(role='progressbar', aria-valuenow='{{file.progress() * 100}}', aria-valuemin='0', aria-valuemax='0', ng-style='{width: (file.progress() * 100) + "%"}')
+                  span.sr-only {{file.progress()}}% complete
+              div.btn-group
+                a.btn.btn-xs.btn-warning(ng-click='file.pause()', ng-show='!file.paused && file.isUploading()') Pause
+                a.btn.btn-xs.btn-warning(ng-click='file.resume()', ng-show='file.paused') Resume
+                a.btn.btn-xs.btn-danger(ng-click='file.cancel()') Cancel
+                a.btn.btn-xs.btn-info(ng-click='file.retry()', ng-show='file.error') Retry
+            div.col-md-3(ng-show='file.isComplete()')
+              select.form-control(ng-model='sound', ng-change='$parent.updateSound(this)')
+                option(value='') -- Please choose --
+                option(value='success') Success
+                option(value='fail') Fail
+                option(value='abort') Abort
+                option(value='unstable') Unstable
+        +saveConfig('save()')
