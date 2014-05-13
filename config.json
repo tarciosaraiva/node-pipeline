@@ -35,6 +35,12 @@
       ]
     }
   ],
-  "sounds": {},
+  "sounds": {
+    "enableSounds": false,
+    "success": "1-01 Respect.m4a",
+    "fail": "1-02 Think.m4a",
+    "abort": "1-03 Spanish Harlem.m4a",
+    "unstable": "1-04 (You Make Me Feel Like) A Natural Woman.m4a"
+  },
   "application": {}
 }

@@ -11,7 +11,7 @@ app.controller('SoundsCtrl', function ($scope, $http) {
   };
 
   $scope.updateSound = function (flowFile) {
-    $scope.sounds[flowFile.sound] = flowFile.file;
+    $scope.sounds[flowFile.sound] = flowFile.file.name;
   };
 
   $scope.$on('flow::fileAdded', function (event, $flow, flowFiles) {
@@ -20,5 +20,17 @@ app.controller('SoundsCtrl', function ($scope, $http) {
       event.preventDefault(); //prevent file from uploading
     }
   });
+
+  $scope.load = function () {
+    $http.get('/api/sounds').success(function (data) {
+      if (data.length > 0) {
+        $scope.sounds = data;
+      }
+    });
+  };
+
+  $scope.save = function () {
+    $http.put('/api/sounds', $scope.sounds);
+  };
 
 });
