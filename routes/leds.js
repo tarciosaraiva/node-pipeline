@@ -13,17 +13,17 @@ router.post('/test', function (req, res) {
     speed = Number(req.param('speed')),
     colour = req.param('colour');
 
-  ledstrip.connect(length);
-  ledstrip.test({
-    length: len,
-    start: start,
-    end: end,
-    animation: animation,
-    speed: speed,
-    colour: colour
-  });
+  if (ledstrip.connect(len, start, end)) {
+    ledstrip.animate({
+      animation: animation,
+      speed: speed,
+      colour: colour
+    });
 
-  res.send();
+    res.send();
+  }
+
+  res.send(500);
 });
 
 router.get('/', function (req, res) {
