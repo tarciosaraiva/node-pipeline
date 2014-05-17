@@ -2,6 +2,8 @@
 'use strict';
 
 app.controller('SoundsCtrl', function ($scope, $http) {
+  $scope.filesAdded = 0;
+  $scope.files = [];
   $scope.sounds = {
     enableSounds: false,
     success: '',
@@ -15,22 +17,24 @@ app.controller('SoundsCtrl', function ($scope, $http) {
   };
 
   $scope.$on('flow::fileAdded', function (event, $flow, flowFiles) {
-    $scope.files += 1;
+    $scope.filesAdded += 1;
     if ($scope.files > 4) {
       event.preventDefault(); //prevent file from uploading
+    } else {
+      $scope.files.push(flowFiles.name);
     }
   });
 
   $scope.load = function () {
     $http.get('/api/sounds').success(function (data) {
-      if (data.length > 0) {
-        $scope.sounds = data;
-      }
+      $scope.sounds = data;
     });
   };
 
   $scope.save = function () {
     $http.put('/api/sounds', $scope.sounds);
   };
+
+  $scope.load();
 
 });
