@@ -1,9 +1,10 @@
+'use strict';
+
 var fs = require('fs');
 var Batch = require('batch');
 var express = require('express');
 var router = express.Router();
 var config = require('./../lib/config');
-var utils = require('./../lib/utils');
 var multiparty = require('multiparty');
 
 /* GET sounds configuration */
@@ -23,7 +24,7 @@ router.put('/', function (req, res) {
   res.send();
 });
 
-router.post('/upload', function (req, res, next) {
+router.post('/upload', function (req, res) {
   var form = new multiparty.Form(),
     batch = new Batch();
 
