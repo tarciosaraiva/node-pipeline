@@ -24,7 +24,6 @@
   ],
   "homepage": "https://github.com/tarciosaraiva/rpipeline-ui",
   "dependencies": {
-    "aws-snsclient": "^0.2.0",
     "batch": "~0.5.x",
     "body-parser": "latest",
     "cookie-parser": "latest",
@@ -35,6 +34,7 @@
     "morgan": "~1.0.x",
     "multiparty": "latest",
     "nconf": "~0.6.x",
+    "sqs": "~0.1.x",
     "static-favicon": "~1.0.x"
   }
 }
