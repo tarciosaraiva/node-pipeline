@@ -1,0 +1,23 @@
+div.row(ng-controller='QueueCtrl')
+  form(role='form').form-horizontal
+    h3 AWS Queue
+    div.well
+        div.form-group
+          label.control-label.col-md-2(for='poll') Polling period
+          div.col-md-2
+            input#poll.form-control(type='text', placeholder='Time in seconds')
+        div.form-group
+          label.control-label.col-md-2(for='queue') Queue info
+          div.col-md-5
+            input#queue.form-control(type='text', placeholder='Name of the queue on SQS')
+          div.col-md-5
+            input#region.form-control(type='text', placeholder='Name of AWS region')
+        div.form-group
+          label.control-label.col-md-2(for='key') Authentication
+          div.col-md-5
+            input#key.form-control(type='text', placeholder='SQS Access Key')
+          div.col-md-5
+            input#secret.form-control(type='text', placeholder='SQS Secret Key')
+        div.form-group
+          div.col-md-offset-2.col-md-10
+            span.help-block The credentials above will not be saved in the configuration file. Instead am environment variable will be setup.

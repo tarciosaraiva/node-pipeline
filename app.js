@@ -11,6 +11,7 @@ var routes = require('./routes/index');
 var leds = require('./routes/leds');
 var pipelines = require('./routes/pipelines');
 var sounds = require('./routes/sounds');
+var queue = require('./routes/queue');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/', routes);
 app.use('/api/leds', leds);
 app.use('/api/sounds', sounds);
 app.use('/api/pipelines', pipelines);
+app.use('/api/queue', queue);
 
 // process.env.AWS_KEY_ID
 // process.env.AWS_SEC_KEY
