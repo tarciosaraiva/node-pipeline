@@ -1,11 +1,13 @@
 {
   "name": "rpipeline-ui",
   "description": "Raspberry Pipeline Configuration Interface",
-  "author": "Tarcio Saraiva",
+  "author": "Tarcio Saraiva <tarcio@gmail.com> (http://tarciosaraiva.com)",
   "license": "MIT",
   "version": "0.0.1",
+  "preferGlobal": "true",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha --recursive -S -R spec"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,10 @@
   "keywords": [
     "raspberrypi",
     "build pipeline",
-    "configuration"
+    "configuration",
+    "pipeline configuration",
+    "lpd8806",
+    "aws sqs"
   ],
   "homepage": "https://github.com/tarciosaraiva/rpipeline-ui",
   "dependencies": {
@@ -36,5 +41,12 @@
     "nconf": "~0.6.x",
     "sqs": "~0.1.x",
     "static-favicon": "~1.0.x"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.x",
+    "sinon": "~1.9.x",
+    "rimraf": "~2.2.x",
+    "chai": "~1.9.x",
+    "zombie": "^2.0.0-alpha31"
   }
 }
