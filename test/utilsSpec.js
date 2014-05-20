@@ -36,7 +36,7 @@ describe('utils', function () {
     var validHex = '#a2c3f4',
       validHexWoHash = 'a2c3f4',
       invalidHex = '1234567',
-      invalidHexLetters = 'op12l4'
+      invalidHexLetters = 'op12l4';
 
     describe('should convert', function () {
       it('with hash on hex', function () {
@@ -98,6 +98,6 @@ describe('utils', function () {
       expect(data).to.equal(dataToEncrypt);
     });
 
-  })
+  });
 
 });
