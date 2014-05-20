@@ -1,23 +1,25 @@
 div.row(ng-controller='QueueCtrl')
-  form(role='form').form-horizontal
-    h3 AWS Queue
-    div.well
+  div.col-md-12
+    form(role='form').form-horizontal
+      h3 AWS Queue
+      div.well
         div.form-group
           label.control-label.col-md-2(for='poll') Polling period
           div.col-md-2
-            input#poll.form-control(type='text', placeholder='Time in seconds')
+            input#poll.form-control(type='text', placeholder='Time in seconds', ng-model='queue.poll')
         div.form-group
           label.control-label.col-md-2(for='queue') Queue info
           div.col-md-5
-            input#queue.form-control(type='text', placeholder='Name of the queue on SQS')
+            input#queue.form-control(type='text', placeholder='Name of the queue on SQS', ng-model='queue.name')
           div.col-md-5
-            input#region.form-control(type='text', placeholder='Name of AWS region')
+            input#region.form-control(type='text', placeholder='Name of AWS region', ng-model='queue.region')
         div.form-group
           label.control-label.col-md-2(for='key') Authentication
           div.col-md-5
-            input#key.form-control(type='text', placeholder='SQS Access Key')
+            input#key.form-control(type='password', placeholder='SQS Access Key', ng-model='queue.accessKey')
           div.col-md-5
-            input#secret.form-control(type='text', placeholder='SQS Secret Key')
+            input#secret.form-control(type='password', placeholder='SQS Secret Key', ng-model='queue.secretKey')
         div.form-group
           div.col-md-offset-2.col-md-10
             span.help-block The credentials above will not be saved in the configuration file. Instead am environment variable will be setup.
+        +saveConfig('save()')

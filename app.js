@@ -30,9 +30,6 @@ app.use('/api/sounds', sounds);
 app.use('/api/pipelines', pipelines);
 app.use('/api/queue', queue);
 
-// process.env.AWS_KEY_ID
-// process.env.AWS_SEC_KEY
-
 /// catch 404 and forwarding to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');

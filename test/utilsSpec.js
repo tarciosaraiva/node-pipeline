@@ -3,6 +3,8 @@
 var expect = require('chai').expect;
 var compare = require('../lib/utils').compare;
 var h2r = require('../lib/utils').hexToRgb;
+var enc = require('../lib/utils').encrypt;
+var dec = require('../lib/utils').decrypt;
 
 describe('utils', function () {
 
@@ -85,4 +87,17 @@ describe('utils', function () {
 
   });
 
-})
+  describe('#encrypt / #decrypt', function () {
+
+    var dataToEncrypt = 'raspberry pipeline ui';
+
+    it('should encrypt and decrypt data', function () {
+      var data = enc(dataToEncrypt);
+      expect(data).to.not.be.null;
+      data = dec(data);
+      expect(data).to.equal(dataToEncrypt);
+    });
+
+  })
+
+});
