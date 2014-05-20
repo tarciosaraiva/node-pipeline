@@ -8,8 +8,12 @@ var encrypt = require('./../lib/utils').encrypt;
 /* GET pipeline configuration */
 router.get('/', function (req, res) {
   var configData = config.get('queue');
-  delete configData.accessKey;
-  delete configData.secretKey;
+
+  if (configData) {
+    delete configData.accessKey;
+    delete configData.secretKey;
+  }
+
   res.json(configData);
 });
 

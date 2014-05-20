@@ -5,6 +5,7 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var sqsPoll = require('./lib/queue');
 
 var routes = require('./routes/index');
 var leds = require('./routes/leds');
@@ -61,5 +62,7 @@ app.use(function (err, req, res) {
   });
 });
 
+// poll for messages in the queue
+sqsPoll.poll();
 
 module.exports = app;
