@@ -131,6 +131,7 @@ describe('ledstrip', function () {
         };
 
       beforeEach(function () {
+        spy.reset();
         clock = sinon.useFakeTimers();
         ledstrip.connect(10, 0, 10, './ledstrip.dev');
       });
@@ -141,7 +142,6 @@ describe('ledstrip', function () {
 
       describe('should fallback to "standard" animation', function () {
         it('when animation is not configured', function () {
-          spy.reset();
           ledstrip.animate(config);
 
           setTimeout(function () {
@@ -156,7 +156,6 @@ describe('ledstrip', function () {
         });
 
         it('when animation is configured', function () {
-          spy.reset();
           config.animation = 'knightrider';
           ledstrip.animate(config);
 
