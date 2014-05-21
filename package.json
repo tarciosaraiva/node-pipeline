@@ -43,8 +43,7 @@
   },
   "devDependencies": {
     "mocha": "~1.18.x",
-    "sinon": "~1.9.x",
-    "rimraf": "~2.2.x",
+    "sinon": "~1.10.x",
     "chai": "~1.9.x",
     "zombie": "^2.0.0-alpha31"
   }
