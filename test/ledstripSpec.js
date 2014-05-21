@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var expect = require('chai').expect;
+var sinon = require('sinon');
 var ledstrip = require('../lib/ledstrip');
 
 describe('ledstrip', function () {
@@ -120,9 +121,60 @@ describe('ledstrip', function () {
 
     //   });
 
-    //   describe('#animate', function () {
+    describe('#animate', function () {
 
-    //   });
+      var clock,
+        spy = sinon.spy(ledstrip, 'sendRgbBuf'),
+        config = {
+          speed: 10,
+          colour: '#a2b3c4'
+        };
+
+      beforeEach(function () {
+        clock = sinon.useFakeTimers();
+        ledstrip.connect(10, 0, 10, './ledstrip.dev');
+      });
+
+      afterEach(function () {
+        clock.restore();
+      });
+
+      describe('should fallback to "standard" animation', function () {
+        it('when animation is not configured', function () {
+          spy.reset();
+          ledstrip.animate(config);
+
+          setTimeout(function () {
+            expect(ledstrip.isBufferOpen()).to.be.true;
+          }, 4000);
+
+          setTimeout(function () {
+            expect(spy.called).to.be.true;
+            expect(spy.callCount).to.eql(50);
+            expect(ledstrip.isBufferOpen()).to.be.false;
+          }, 6000);
+        });
+
+        it('when animation is configured', function () {
+          spy.reset();
+          config.animation = 'knightrider';
+          ledstrip.animate(config);
+
+          setTimeout(function () {
+            expect(ledstrip.isBufferOpen()).to.be.true;
+          }, 4000);
+
+          setTimeout(function () {
+            expect(spy.called).to.be.true;
+            expect(spy.callCount).to.eql(50);
+            expect(ledstrip.isBufferOpen()).to.be.false;
+          }, 6000);
+
+        });
+
+      });
+
+    });
 
   });
 
