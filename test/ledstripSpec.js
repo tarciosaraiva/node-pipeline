@@ -20,34 +20,38 @@ describe('ledstrip', function () {
       ledstrip.disconnect();
     });
 
-    it('should connect with defaults', function () {
-      ledstrip.connect(10, undefined, undefined, 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.true;
+    describe('should connect', function () {
+      it('with defaults', function () {
+        ledstrip.connect(10, undefined, undefined, 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.true;
+      });
+
+      it('with section', function () {
+        ledstrip.connect(10, 4, 8, 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.true;
+      });
+
+      it('with numbers represented as string', function () {
+        ledstrip.connect('10', '4', '5', 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.true;
+      });
     });
 
-    it('should connect with section', function () {
-      ledstrip.connect(10, 4, 8, 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.true;
-    });
+    describe('should not connect', function () {
+      it('with section outside of boundaries', function () {
+        ledstrip.connect(10, 4, 12, 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.false;
+      });
 
-    it('should not connect with section outside of boundaries', function () {
-      ledstrip.connect(10, 4, 12, 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.false;
-    });
+      it('with section numbers inverted', function () {
+        ledstrip.connect(10, 8, 4, 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.false;
+      });
 
-    it('should not connect with section numbers inverted', function () {
-      ledstrip.connect(10, 8, 4, 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.false;
-    });
-
-    it('should not connect with number of LEDs lower than one', function () {
-      ledstrip.connect(-1, undefined, undefined, 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.false;
-    });
-
-    it('should connect with numbers represented as string', function () {
-      ledstrip.connect('10', '4', '5', 'ledstrip.dev');
-      expect(ledstrip.isBufferOpen()).to.be.true;
+      it('with number of LEDs lower than one', function () {
+        ledstrip.connect(-1, undefined, undefined, 'ledstrip.dev');
+        expect(ledstrip.isBufferOpen()).to.be.false;
+      });
     });
   });
 

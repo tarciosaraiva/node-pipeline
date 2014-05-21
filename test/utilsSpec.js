@@ -58,30 +58,32 @@ describe('utils', function () {
       });
     });
 
-    it('should return black when invalid hex', function () {
-      var result = h2r(invalidHex);
-      expect(result).to.deep.equal({
-        r: 0x00,
-        g: 0x00,
-        b: 0x00
+    describe('should return black', function () {
+      it('when invalid hex', function () {
+        var result = h2r(invalidHex);
+        expect(result).to.deep.equal({
+          r: 0x00,
+          g: 0x00,
+          b: 0x00
+        });
       });
-    });
 
-    it('should return black when no hex provided', function () {
-      var result = h2r(null);
-      expect(result).to.deep.equal({
-        r: 0x00,
-        g: 0x00,
-        b: 0x00
+      it('when no hex provided', function () {
+        var result = h2r(null);
+        expect(result).to.deep.equal({
+          r: 0x00,
+          g: 0x00,
+          b: 0x00
+        });
       });
-    });
 
-    it('should return black when invalid hex letters', function () {
-      var result = h2r(invalidHexLetters);
-      expect(result).to.deep.equal({
-        r: 0x00,
-        g: 0x00,
-        b: 0x00
+      it('when invalid hex letters', function () {
+        var result = h2r(invalidHexLetters);
+        expect(result).to.deep.equal({
+          r: 0x00,
+          g: 0x00,
+          b: 0x00
+        });
       });
     });
 
