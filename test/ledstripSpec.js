@@ -53,8 +53,8 @@ describe('ledstrip', function () {
 
   describe('buffering data', function () {
 
-    before(function () {
-      ledstrip.connect(10, 0, 9, './ledstrip.dev');
+    beforeEach(function () {
+      ledstrip.connect(10, 0, 10, './ledstrip.dev');
     });
 
     afterEach(function () {
@@ -76,9 +76,41 @@ describe('ledstrip', function () {
 
     });
 
-    //   describe('#completeBuffer', function () {
+    describe('#completeBuffer', function () {
 
-    //   });
+      beforeEach(function () {
+        ledstrip.disconnect();
+        expect(ledstrip.isBufferOpen()).to.be.false;
+      });
+
+      it('should complete buffer with no color', function () {
+        ledstrip.connect(10, 2, 3, './ledstrip.dev');
+
+        var buffer = new Buffer(3);
+        buffer[0] = 0xFF;
+        buffer[1] = 0x00;
+        buffer[2] = 0xFF;
+
+        var updBuff = ledstrip.completeBuffer(buffer);
+        expect(updBuff.length).to.equal(30);
+        expect(updBuff[6]).to.equal(255);
+        expect(updBuff[7]).to.equal(0);
+        expect(updBuff[8]).to.equal(255);
+      });
+
+      it('should not complete when section is the size of the strip', function () {
+        ledstrip.connect(10, 0, 10, './ledstrip.dev');
+
+        var buffer = new Buffer(30);
+        for (var i = 0; i < buffer.length; i++) {
+          buffer[i] = 0xFF;
+        }
+        var updBuff = ledstrip.completeBuffer(buffer);
+        expect(updBuff.length).to.equal(30);
+        expect(updBuff).to.eql(buffer);
+      });
+
+    });
 
     //   describe('#sendRgbBuf', function () {
 
