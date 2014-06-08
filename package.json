@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive -S -R mocha-jenkins-reporter || true"
+    "test": "mocha --recursive -S -R xunit test/ > test-reports.xml"
   },
   "repository": {
     "type": "git",
@@ -48,7 +48,6 @@
     "mocha": "~1.18.x",
     "sinon": "~1.10.x",
     "chai": "~1.9.x",
-    "mocha-jenkins-reporter": "^0.1.x",
     "zombie": "^2.0.0-alpha31"
   }
 }
