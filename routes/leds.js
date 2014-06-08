@@ -25,7 +25,7 @@ router.post('/test', function (req, res) {
     res.send(500);
   }
 
-  ledstrip.connect(len, start, end);
+  ledstrip.connect(start, end);
   ledstrip.animate({
     animation: animation,
     speed: speed,
@@ -46,6 +46,7 @@ router.put('/', function (req, res) {
     if (err) {
       res.send(500);
     }
+    config.load();
   });
   res.json('Configuration saved successfully.');
 });
