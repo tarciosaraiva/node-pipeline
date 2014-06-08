@@ -5,7 +5,8 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var sqsPoll = require('./lib/queue');
+var Queue = require('./lib/queue');
+var conf = require('./lib/config');
 
 var routes = require('./routes/index');
 var leds = require('./routes/leds');
@@ -63,6 +64,12 @@ app.use(function (err, req, res) {
 });
 
 // poll for messages in the queue
-sqsPoll.poll();
+var intervalId = setInterval(function () {
+  if (conf.get('queue')) {
+    clearInterval(intervalId);
+    var q = new Queue();
+    q.poll();
+  }
+}, 1000);
 
 module.exports = app;
