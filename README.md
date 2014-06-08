@@ -14,7 +14,12 @@ Since the project above was written in Python and I wanted to have the whole thi
 
 Features
 ---
-TODO
+* One LED strip, multiple jobs on your CI
+* 4 animations to choose from
+* Completely decoupled architecture
+* No need to create complicated configuration files, use the UI and let the tool do the heavy lifting for you
+* Play a sound on Success, Fail, Abort and Unstable build
+* Compared to other build light solutions, value for money is indeed a feature! Just a bit over $100 with the Pi!
 
 What you need
 ----
