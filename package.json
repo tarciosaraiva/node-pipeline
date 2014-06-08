@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive -S -R spec"
+    "test": "mocha --recursive -S -R mocha-jenkins-reporter || true"
   },
   "repository": {
     "type": "git",
