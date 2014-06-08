@@ -4,6 +4,7 @@ var fs = require('fs');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var ledstrip = require('../lib/ledstrip');
+var conf = require('../lib/config');
 
 describe('ledstrip', function () {
 
@@ -22,35 +23,36 @@ describe('ledstrip', function () {
     });
 
     describe('should connect', function () {
+
+      before(function () {
+        fs.writeFileSync('config.json', '{ "leds": { "length": 10 } }', 'utf8');
+        conf.load();
+      });
+
       it('with defaults', function () {
-        ledstrip.connect(10, undefined, undefined, 'ledstrip.dev');
+        ledstrip.connect(undefined, undefined, 'ledstrip.dev');
         expect(ledstrip.isBufferOpen()).to.be.true;
       });
 
       it('with section', function () {
-        ledstrip.connect(10, 4, 8, 'ledstrip.dev');
+        ledstrip.connect(4, 8, 'ledstrip.dev');
         expect(ledstrip.isBufferOpen()).to.be.true;
       });
 
       it('with numbers represented as string', function () {
-        ledstrip.connect('10', '4', '5', 'ledstrip.dev');
+        ledstrip.connect('4', '5', 'ledstrip.dev');
         expect(ledstrip.isBufferOpen()).to.be.true;
       });
     });
 
     describe('should not connect', function () {
       it('with section outside of boundaries', function () {
-        ledstrip.connect(10, 4, 12, 'ledstrip.dev');
+        ledstrip.connect(4, 12, 'ledstrip.dev');
         expect(ledstrip.isBufferOpen()).to.be.false;
       });
 
       it('with section numbers inverted', function () {
-        ledstrip.connect(10, 8, 4, 'ledstrip.dev');
-        expect(ledstrip.isBufferOpen()).to.be.false;
-      });
-
-      it('with number of LEDs lower than one', function () {
-        ledstrip.connect(-1, undefined, undefined, 'ledstrip.dev');
+        ledstrip.connect(8, 4, 'ledstrip.dev');
         expect(ledstrip.isBufferOpen()).to.be.false;
       });
     });
@@ -59,7 +61,7 @@ describe('ledstrip', function () {
   describe('buffering data', function () {
 
     beforeEach(function () {
-      ledstrip.connect(10, 0, 10, './ledstrip.dev');
+      ledstrip.connect(0, 10, './ledstrip.dev');
     });
 
     afterEach(function () {
@@ -89,7 +91,7 @@ describe('ledstrip', function () {
       });
 
       it('should complete buffer with no color', function () {
-        ledstrip.connect(10, 2, 3, './ledstrip.dev');
+        ledstrip.connect(2, 3, './ledstrip.dev');
 
         var buffer = new Buffer(3);
         buffer[0] = 0xFF;
@@ -104,7 +106,7 @@ describe('ledstrip', function () {
       });
 
       it('should not complete when section is the size of the strip', function () {
-        ledstrip.connect(10, 0, 10, './ledstrip.dev');
+        ledstrip.connect(0, 10, './ledstrip.dev');
 
         var buffer = new Buffer(30);
         for (var i = 0; i < buffer.length; i++) {
@@ -133,7 +135,7 @@ describe('ledstrip', function () {
       beforeEach(function () {
         spy.reset();
         clock = sinon.useFakeTimers();
-        ledstrip.connect(10, 0, 10, './ledstrip.dev');
+        ledstrip.connect(0, 10, './ledstrip.dev');
       });
 
       afterEach(function () {
