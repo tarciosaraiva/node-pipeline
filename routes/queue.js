@@ -14,6 +14,9 @@ router.get('/', function (req, res) {
     delete configData.secretKey;
   }
 
+  // ms to s
+  configData.poll = configData.poll / 1000;
+
   res.json(configData);
 });
 
@@ -21,6 +24,8 @@ router.get('/', function (req, res) {
 router.put('/', function (req, res) {
   var payload = req.body;
 
+  // s to ms
+  payload.poll = payload.poll * 1000;
   payload.accessKey = encrypt(payload.accessKey);
   payload.secretKey = encrypt(payload.secretKey);
 
@@ -29,6 +34,7 @@ router.put('/', function (req, res) {
     if (err) {
       res.send(500);
     }
+    config.load();
   });
   res.send();
 });
