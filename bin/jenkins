@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var sqs = require('sqs');
+
+var q = sqs({
+  access: process.env.AWS_KEY_ID,
+  secret: process.env.AWS_SEC_KEY,
+  region: process.env.AWS_REGION
+});
+
+q.push(process.env.AWS_SQS_NAME, {
+  Subject: 'Build STARTED: ' + process.env.JOB_NAME + ' #' + process.env.BUILD_NUMBER
+});
