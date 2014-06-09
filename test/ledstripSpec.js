@@ -58,6 +58,43 @@ describe('ledstrip', function () {
     });
   });
 
+  describe('#disconnect', function () {
+    var prevState;
+    before(function () {
+      fs.writeFileSync('config.json', '{ "leds": { "length": 10 } }', 'utf8');
+      conf.load();
+    });
+
+    beforeEach(function () {
+      ledstrip.connect(4, 8, 'ledstrip.dev');
+    });
+
+    it('without colour', function () {
+      ledstrip.disconnect();
+      prevState = fs.readFileSync('ledstrip.dev');
+      expect(prevState.length).to.equal(32);
+
+      for (var i = 0; i < prevState.length; i++) {
+        if (i === 0 || i === (prevState.length - 1)) {
+          expect(prevState[i]).to.equal(0);
+        } else {
+          expect(prevState[i]).to.equal(128);
+        }
+      };
+    });
+
+    it('with colour', function () {
+      expect(prevState.length).to.equal(32);
+
+      ledstrip.disconnect('#ff0000');
+
+      var currData = fs.readFileSync('ledstrip.dev');
+      expect(currData.length).to.equal(32);
+      expect(currData).to.not.eql(prevState);
+    });
+
+  });
+
   describe('buffering data', function () {
 
     beforeEach(function () {
