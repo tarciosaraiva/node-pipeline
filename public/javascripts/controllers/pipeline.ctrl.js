@@ -25,7 +25,7 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
   $scope.addStage = function () {
     var slen = this.p.stages.length,
       offset = slen !== 0 ? this.p.stages.map(function (el) {
-        return parseInt(el.offset) + parseInt(el.length);
+        return parseInt(el.offset, 10) + parseInt(el.length, 10);
       }).reduce(function (previousVal, currentVal) {
         return currentVal;
       }) : DEFAULT_OFFSET;
@@ -36,7 +36,7 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
     }
 
     this.p.stages.push({
-      name: 'Stage ' + parseInt(Math.random() * (10 - 1) + 1),
+      name: 'Stage ' + parseInt(Math.random() * (10 - 1) + 1, 10),
       length: Number(DEFAULT_LENGTH),
       offset: Number(offset)
     });
