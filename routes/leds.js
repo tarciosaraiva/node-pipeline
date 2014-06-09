@@ -26,11 +26,16 @@ router.post('/test', function (req, res) {
   }
 
   ledstrip.connect(start, end);
-  ledstrip.animate({
+  var intervalId = ledstrip.animate({
     animation: animation,
     speed: speed,
     colour: colour
   });
+
+  setTimeout(function () {
+    ledstrip.disconnect();
+    clearInterval(intervalId);
+  }, 5000);
 
   res.send();
 });
