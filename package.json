@@ -43,6 +43,7 @@
     "morgan": "~1.0.x",
     "multiparty": "latest",
     "nconf": "~0.6.x",
+    "node-localstorage": "^0.3.4",
     "sqs": "~0.1.x",
     "static-favicon": "~1.0.x",
     "string": "^1.8.x"
