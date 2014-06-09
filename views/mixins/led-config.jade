@@ -24,7 +24,7 @@ div.row(ng-controller='LedCtrl')
             div.input-group.colorpicker-group
               input#fail.form-control(type='text', placeholder='Fail', maxlength='7', colorpicker, ng-model='leds.colours.fail')
               span.input-group-addon
-                i(ng-style="{'background-color': leds.colours.fail}")
+                i(ng-style="{'background-color': leds.colours.failure}")
           div.col-md-2
             div.input-group.colorpicker-group
               input#abort.form-control(type='text', placeholder='Abort', maxlength='7', colorpicker, ng-model='leds.colours.abort')
