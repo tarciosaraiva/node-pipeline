@@ -7,6 +7,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var Queue = require('./lib/queue');
 var conf = require('./lib/config');
+var ledstrip = require('./lib/ledstrip');
 
 var routes = require('./routes/index');
 var leds = require('./routes/leds');
@@ -71,5 +72,8 @@ var intervalId = setInterval(function () {
     q.poll();
   }
 }, 1000);
+
+ledstrip.connect();
+ledstrip.disconnect();
 
 module.exports = app;
