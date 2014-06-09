@@ -6,11 +6,52 @@
 Raspberry Pipeline GUI Config
 =============================
 
-UI for configuring [Raspberry Pipeline](https://github.com/jkelabora/raspberry-pipeline)
-
-This project was born on the need of easily configuring an LED stripe - specifically [LPD8806](http://www.adafruit.com/products/306) - to work with the project referred above.
+This project was born on the need of easily configuring an LED stripe - specifically [LPD8806](http://www.adafruit.com/products/306) - to display the build pipeline on a Jenkins box. The original project, created by my colleague Julian Kelabora, can be found [here](https://github.com/jkelabora/raspberry-pipeline).
 
 Since the project above was written in Python and I wanted to have the whole thing written in **nodejs**, this project was then born.
+
+How to Jenkins
+---
+I'm assuming you have Jenkins installed. You don't need to have the Build Pipeline plugin installed but I recommend as it makes it easier to visualize your project in a series of hops or steps.
+
+First, download and install [this plugin](https://github.com/jkelabora/snsnotify-plugin/). You will need Maven to build the Jenkins extension: simply follow the steps on the project and you will be fine.
+
+Once the plugin is installed, then it's time to define your Pipeline and possibly rename your jobs - yes, it's not a good thing to rename your projects in Jenkins but you will want to do that for the sake of clarification of your pipelines and stages.
+
+An ideal nomenclature is `<PIPELINE> - <STAGE>` e.g.: NodePipeline - Build, Node Pipeline - Functional, etc
+
+Configure every Job related to that pipeline and add a `Post-build Action` for `Amazon SNS Notifier`. If you haven't added the Topic ARN reference when you were configuring Jenkins, then add the reference now.
+
+### Building a project using AWS
+Add the following script under your project's `bin` folder. I named the script `jenkins`:
+
+    #!/usr/bin/env node
+
+    var sqs = require('sqs');
+
+    var q = sqs({
+      access: process.env.AWS_KEY_ID,
+      secret: process.env.AWS_SEC_KEY,
+      region: process.env.AWS_REGION
+    });
+
+    q.push(process.env.AWS_SQS_NAME, {
+      Subject: 'Build STARTED: ' + process.env.JOB_NAME + ' #' + process.env.BUILD_NUMBER
+    });
+
+Then on `package.json` add the following line under `scripts`:
+
+    "init-pipeline": "node ./bin/jenkins"
+
+The above will push a message to the queue on AWS for the purpose of starting the pipeline. The Node Pipeline will receive this message and execute an animation that relates to building.
+
+The downside of the solution above is that you have to specify environment variables for that to run. So, in Jenkins, the first build step should be as follows:
+
+    export AWS_KEY_ID=<KEY>
+    export AWS_SEC_KEY=<SECRET>
+    export AWS_REGION=<REGION>
+    export AWS_SQS_NAME=<QUEUE>
+    npm run-script init-pipeline 
 
 Features
 ---
@@ -92,6 +133,4 @@ You can create as many pipelines and stages as you want up to the number of LEDs
 Upload one file per build status. It's completely optional.
 
 ### Queue
-By default we use AWS.
-
-TODO
+By default we use AWS: enter your key, secret, region and queue name and the system will poll automatically for new messages.
