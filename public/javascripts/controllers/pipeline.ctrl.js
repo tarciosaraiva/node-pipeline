@@ -1,3 +1,4 @@
+/*global app: true */
 'use strict';
 
 app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
