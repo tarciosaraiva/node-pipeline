@@ -1,5 +1,5 @@
 {
-  "name": "rpipeline-ui",
+  "name": "node-pipeline",
   "description": "Raspberry Pipeline Configuration Interface",
   "author": "Tarcio Saraiva <tarcio@gmail.com> (http://tarciosaraiva.com)",
   "license": "MIT",
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/tarciosaraiva/rpipeline-ui.git"
+    "url": "git://github.com/tarciosaraiva/node-pipeline.git"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "bugs": {
-    "url": "https://github.com/tarciosaraiva/rpipeline-ui/issues"
+    "url": "https://github.com/tarciosaraiva/node-pipeline/issues"
   },
   "keywords": [
     "raspberrypi",
@@ -32,7 +32,7 @@
     "lpd8806",
     "aws sqs"
   ],
-  "homepage": "https://github.com/tarciosaraiva/rpipeline-ui",
+  "homepage": "https://github.com/tarciosaraiva/node-pipeline",
   "dependencies": {
     "batch": "~0.5.x",
     "body-parser": "latest",

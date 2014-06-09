@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/tarciosaraiva/rpipeline-ui.svg?branch=master)](https://travis-ci.org/tarciosaraiva/rpipeline-ui)
-[![Code Climate](https://codeclimate.com/github/tarciosaraiva/rpipeline-ui.png)](https://codeclimate.com/github/tarciosaraiva/rpipeline-ui)
-[![Dependency Status](https://gemnasium.com/tarciosaraiva/rpipeline-ui.svg)](https://gemnasium.com/tarciosaraiva/rpipeline-ui)
-[![Gitter chat](https://badges.gitter.im/tarciosaraiva/rpipeline-ui.png)](https://gitter.im/tarciosaraiva/rpipeline-ui)
+[![Build Status](https://travis-ci.org/tarciosaraiva/node-pipeline.svg?branch=master)](https://travis-ci.org/tarciosaraiva/node-pipeline)
+[![Code Climate](https://codeclimate.com/github/tarciosaraiva/node-pipeline.png)](https://codeclimate.com/github/tarciosaraiva/node-pipeline)
+[![Dependency Status](https://gemnasium.com/tarciosaraiva/node-pipeline.svg)](https://gemnasium.com/tarciosaraiva/node-pipeline)
+[![Gitter chat](https://badges.gitter.im/tarciosaraiva/node-pipeline.png)](https://gitter.im/tarciosaraiva/node-pipeline)
 
 Raspberry Pipeline GUI Config
 =============================
