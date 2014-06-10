@@ -22,9 +22,10 @@ describe('queue', function () {
     };
 
     fs.writeFileSync('config.json', JSON.stringify(config), 'utf8');
-    queue = new Queue(nconf.file({
+    nconf.file({
       file: 'config.json'
-    }));
+    });
+    queue = new Queue();
   });
 
   after(function () {
