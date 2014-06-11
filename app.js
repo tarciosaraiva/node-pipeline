@@ -2,13 +2,14 @@
 
 var express = require('express');
 var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
+var winston = require('winston');
+var eWinston = require('express-winston');
 var bodyParser = require('body-parser');
 var Queue = require('./lib/queue');
 var conf = require('./lib/config');
 var ledstrip = require('./lib/ledstrip');
 
+// routes
 var routes = require('./routes/index');
 var leds = require('./routes/leds');
 var pipelines = require('./routes/pipelines');
@@ -21,11 +22,21 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(favicon());
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(eWinston.logger({
+  transports: [
+    new winston.transports.File({
+      filename: 'logs/access.log',
+      handleExceptions: false,
+      json: false
+    })
+  ],
+  level: 'info',
+  statusLevels: true
+}));
 
 app.use('/', routes);
 app.use('/api/leds', leds);
