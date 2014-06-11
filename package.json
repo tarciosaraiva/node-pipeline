@@ -6,7 +6,7 @@
   "version": "0.0.1",
   "preferGlobal": "true",
   "bin": {
-    "rpipeline": "./bin/www"
+    "node-pipeline": "./bin/www"
   },
   "scripts": {
     "start": "node ./bin/www",
