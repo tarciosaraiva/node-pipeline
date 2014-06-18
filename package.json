@@ -39,7 +39,7 @@
     "debug": "latest",
     "express": "latest",
     "jade": "^1.3.x",
-    "winston": "^0.6.x",
+    "winston": "^0.7.x",
     "express-winston": "^0.2.x",
     "multiparty": "latest",
     "nconf": "^0.6.x",
