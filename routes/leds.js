@@ -51,7 +51,6 @@ router.put('/', function (req, res) {
     if (err) {
       res.send(500);
     }
-    config.load();
   });
   res.json('Configuration saved successfully.');
 });
