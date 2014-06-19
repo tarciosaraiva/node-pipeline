@@ -24,9 +24,11 @@ app.controller('LedCtrl', function ($scope, $rootScope, $http) {
   };
 
   $scope.animate = function () {
-    $http.post('/api/leds/animate', {
+    $http.post('/api/leds/test', {
       length: $rootScope.stripLength,
-      building: $scope.leds.building
+      animation: $scope.leds.building.animation,
+      colour: $scope.leds.building.colour,
+      speed: $scope.leds.building.speed,
     });
   };
 
