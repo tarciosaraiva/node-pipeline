@@ -6,6 +6,7 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
   var DEFAULT_OFFSET = 0;
 
   $scope.canAdd = true;
+  $scope.buildingStatus = {};
   $scope.pipelines = [{
     name: 'Pipeline 1',
     stages: [{
@@ -66,7 +67,10 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
     $http.post('/api/leds/test', {
       length: $rootScope.stripLength,
       start: start,
-      end: end
+      end: end,
+      animation: $scope.buildingStatus.animation,
+      colour: $scope.buildingStatus.colour,
+      speed: $scope.buildingStatus.speed,
     });
   };
 
@@ -75,6 +79,10 @@ app.controller('PipelineCtrl', function ($scope, $rootScope, $http) {
       if (data.length > 0) {
         $scope.pipelines = data;
       }
+    });
+
+    $http.get('/api/leds').success(function (data) {
+      $scope.buildingStatus = data.building;
     });
   };
 
