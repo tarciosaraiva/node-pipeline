@@ -6,7 +6,7 @@ var router = express.Router();
 var config = require('./../lib/config');
 
 router.post('/test', function (req, res) {
-  var len = Number(req.param('length')) - 1,
+  var len = Number(req.param('length')),
     start = Number(req.param('start')) || 0,
     end = Number(req.param('end')) || len,
     animation = req.param('animation'),
